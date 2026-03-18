@@ -18,10 +18,13 @@ entity Referent {
     <u>id</u>
     --
     designation
-    name
+    firstName
+    lastName
     birthDate
-    website
-    isAlive : bool
+    isAlive
+    address
+    nickname[0..1]
+    website [0..1]
 }
 
 entity "Order" as OrderTable {
@@ -103,4 +106,5 @@ OrderCoupon::orderId --> OrderTable::id
 OrderCoupon::couponCode --> Coupon::code
 ItemReferent::itemId --> Item::id
 ItemReferent::referentId --> Referent::id
+Referent::address --> Address::id
 @enduml
