@@ -1,0 +1,86 @@
+@startuml BDD - Schéma conceptuel
+title BDD - Schéma conceptuel
+!theme plain
+hide circle
+skinparam linetype ortho
+
+entity Item{
+    <u>id</u>
+    --
+    name
+    priceExVAT
+    VATPercentage
+    leftInStock
+    description
+    image
+}
+entity Referent{
+    <u>id</u>
+    --
+    designation
+    name
+    birthDate
+    website [0..1]
+    isAlive
+}
+entity Order{
+    <u>id</u>
+    --
+    receiverFirstName
+    receiverLastName
+    creationTime
+}
+entity OrderLine{
+    --
+    quantity
+    priceAtTheTime
+}
+note top of OrderLine : id(OrderLine) : id(Order), id(Item)
+entity Coupon{
+    <u>code</u>
+    --
+    discountPercentage
+}
+entity Employee {
+    <u>id</u>
+    --
+    firstName
+    lastName
+    hiringDate
+    salary
+}
+entity Country{
+    <u>name</u>
+    --
+    isSupported
+}
+entity Locality{
+    <u>id</u>
+    --
+    name 
+    zipCode 
+    isSupported
+}
+
+entity Address{
+    <u>id</u>
+    --
+    isPickupPoint
+    numInStreet
+    streetName
+    box [0..1]
+}
+note top of Address : Is only created when selected,\n except for pickup points
+
+
+' Relations
+Order ||--o{ OrderLine
+OrderLine }o--|| Item
+Order }o--o{ Coupon : Reductions
+Order }o--o| Address : Shipping
+Order }o--|| Employee : Encoding
+Locality ||--o{ Address
+Country ||--o{ Locality
+Referent }o--o{ Item
+
+@enduml
