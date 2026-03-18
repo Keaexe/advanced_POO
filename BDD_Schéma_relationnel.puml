@@ -2,8 +2,6 @@
 title BDD - Schéma relationnel
 !theme plain
 hide circle
-' hide empty methods
-' hide empty fields
 
 entity Item {
     <u>id</u>
@@ -43,7 +41,6 @@ entity OrderLine {
     quantity
     priceAtTheTime
 }
-note top of OrderLine : id(OrderLine) : id(Order), id(Item)
 
 entity Coupon {
     <u>code</u>
