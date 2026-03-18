@@ -60,7 +60,6 @@ entity OrderLine{
   priceAtTheTime
 }
 
-note top of OrderLine : id(OrderLine) : id(Order), id(Item)
 
 entity Coupon{
   <u>code</u>
@@ -99,8 +98,6 @@ entity DeliveryAddress{
   localityId
 }
 
-note top of DeliveryAddress : Is only created when selected,\n except for pickup points
-
 entity OrderCoupon{
   <u>orderId</u>
   <u>couponCode</u>
@@ -131,4 +128,5 @@ OrderCoupon::couponCode --> Coupon::code
 
 ItemReferent::itemId --> Item::id
 ItemReferent::referentId --> Referent::id
+Referent::address --> Address::id
 @enduml
