@@ -1,5 +1,5 @@
-@startuml BDD - Schéma relationnel
-title BDD - Schéma relationnel
+@startuml BDD - Relational model
+title BDD - Relational model
 !theme plain
 hide circle
 

@@ -1,5 +1,5 @@
-@startuml BDD - Schéma conceptuel
-title BDD - Schéma conceptuel
+@startuml BDD - Conceptual model
+title BDD - Conceptual model
 !theme plain
 hide circle
 skinparam linetype ortho
