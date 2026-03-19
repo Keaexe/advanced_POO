@@ -1,10 +1,9 @@
-CREATE DATABASE POO_ADVANCED
-
-USE POO_ADVANCED
+CREATE DATABASE IF NOT EXISTS POO_ADVANCED;
+USE POO_ADVANCED;
 
 CREATE TABLE Country (
     name VARCHAR(50) PRIMARY KEY,
-    isSupported BIT NOT NULL
+    isSupported BOOLEAN NOT NULL
 );
 
 CREATE TABLE Employee (
@@ -34,14 +33,14 @@ CREATE TABLE Locality (
     id INT PRIMARY KEY,
     name VARCHAR(255),
     zipCode VARCHAR(20),
-    isSupported BIT,
+    isSupported BOOLEAN,
     countryName VARCHAR(50),
     FOREIGN KEY (countryName) REFERENCES Country(name)
 );
 
 CREATE TABLE Address (
     id INT PRIMARY KEY,
-    isPickupPoint BIT,
+    isPickupPoint BOOLEAN,
     numInStreet VARCHAR(20),
     streetName VARCHAR(255),
     box VARCHAR(20),
@@ -55,12 +54,11 @@ CREATE TABLE Referent (
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(100) NOT NULL,
     birthDate DATE NOT NULL,
-    isAlive BIT NOT NULL,
+    isAlive BOOLEAN NOT NULL,
     address INT NOT NULL,
     website VARCHAR(255) NULL,
-    nickname VARCHAR(100) NULL
-	FOREIGN KEY (address) REFERENCES Address(id)
-
+    nickname VARCHAR(100) NULL,
+    FOREIGN KEY (address) REFERENCES Address(id)
 );
 
 CREATE TABLE OrderTable (
