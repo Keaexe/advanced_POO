@@ -1,110 +1,132 @@
-@startuml BDD - Schéma relationnel
-title BDD - Schéma relationnel
+@startuml BDD - Relational model
+title BDD - Relational model
 !theme plain
 hide circle
 
-entity Item {
-    <u>id</u>
-    --
-    name
-    priceExVAT
-    VATPercentage
-    leftInStock
-    description
-    image
+entity Item{
+  <u>id</u>
+  --
+  name
+  priceExVAT
+  VATPercentage
+  leftInStock
+  description
+  image
+  categoryName
+}
+entity Category{
+  <u>name</u>
+  --
+  description
+}
+entity Referent{
+  <u>id</u>
+  --
+  designation
+  firstName
+  lastName
+  birthDate
+  isAlive 
+  nickname [0..1]
+  website [0..1]
+  schoolOfThoughId
+  deliveryAddressId
+}
+entity SchoolOfThough{
+  <u>id</u>
+  --
+  name
+  description
+}
+entity Order{
+  <u>id</u>
+  --
+  creationTime
+  employeeId
+  clientId
+}
+entity Client{
+  <u>id</u>
+  --
+  firstName
+  lastName
+  deliveryAddressId
+}
+entity OrderLine{
+  <u>orderId</u>
+  <u>itemId</u>
+  --
+  quantity
+  priceAtTheTime
 }
 
-entity Referent {
-    <u>id</u>
-    --
-    designation
-    firstName
-    lastName
-    birthDate
-    isAlive
-    address
-    nickname[0..1]
-    website [0..1]
+
+entity Coupon{
+  <u>code</u>
+  --
+  discountPercentage
 }
 
-entity "Order" as OrderTable {
-    <u>id</u>
-    --
-    receiverFirstName
-    receiverLastName
-    creationTime
-    employeeId
-    shippingAddressId
+entity Employee{
+  <u>id</u>
+  --
+  firstName
+  lastName
+  hiringDate
+  salary
+}
+entity Country{
+  <u>name</u>
+  --
+  isSupported 
+}
+entity Locality{
+  <u>id</u>
+  --
+  name
+  zipCode
+  isSupported 
+  countryName
+}
+entity DeliveryAddress{
+  <u>id</u>
+  --
+  isPickupPoint 
+  numInStreet
+  streetName
+  box [0..1]
+  localityId
 }
 
-entity OrderLine {
-    <u>orderId</u>
-    <u>itemId</u>
-    --
-    quantity
-    priceAtTheTime
+entity OrderCoupon{
+  <u>orderId</u>
+  <u>couponCode</u>
+}
+entity ItemReferent{
+  <u>itemId</u>
+  <u>referentId</u>
 }
 
-entity Coupon {
-    <u>code</u>
-    --
-    discountPercentage
-}
+Item::categoryName --> Category::name
 
-entity Employee {
-    <u>id</u>
-    --
-    firstName
-    lastName
-    hiringDate
-    salary
-}
+Referent::schoolOfThoughId --> SchoolOfThough::id
+Referent::deliveryAddressId --> DeliveryAddress::id
 
-entity Country {
-    <u>name</u>
-    --
-    isSupported : bool
-}
+Order::employeeId --> Employee::id
+Order::clientId --> Client::id
 
-entity Locality {
-    <u>id</u>
-    --
-    name
-    zipCode
-    isSupported : bool
-    countryName
-}
+Client::deliveryAddressId --> DeliveryAddress::id
 
-entity Address {
-    <u>id</u>
-    --
-    isPickupPoint : bool
-    numInStreet
-    streetName
-    box
-    localityId
-}
-note top of Address : Is only created when selected,\n except for pickup points
-
-entity OrderCoupon {
-    <u>orderId</u>
-    <u>couponCode</u>
-}
-
-entity ItemReferent {
-    <u>itemId</u>
-    <u>referentId</u>
-}
-
-OrderTable::employeeId --> Employee::id
-OrderTable::shippingAddressId --> Address::id
-OrderLine::orderId --> OrderTable::id
+OrderLine::orderId --> Order::id
 OrderLine::itemId --> Item::id
+
 Locality::countryName --> Country::name
-Address::localityId --> Locality::id
-OrderCoupon::orderId --> OrderTable::id
+DeliveryAddress::localityId --> Locality::id
+
+OrderCoupon::orderId --> Order::id
 OrderCoupon::couponCode --> Coupon::code
+
 ItemReferent::itemId --> Item::id
 ItemReferent::referentId --> Referent::id
-Referent::address --> Address::id
+Referent::address --> DeliveryAddress::id
 @enduml

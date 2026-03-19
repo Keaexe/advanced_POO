@@ -1,5 +1,5 @@
-@startuml BDD - Schéma conceptuel
-title BDD - Schéma conceptuel
+@startuml BDD - Conceptual model
+title BDD - Conceptual model
 !theme plain
 hide circle
 skinparam linetype ortho
@@ -14,6 +14,11 @@ entity Item{
     description
     image
 }
+entity Category{
+    <u>name</u>
+    --
+    description
+}
 entity Referent{
     <u>id</u>
     --
@@ -25,12 +30,22 @@ entity Referent{
     nickname[0..1]
     website [0..1]
 }
+entity SchoolOfThough{
+    <u>id</u>
+    --
+    name
+    description
+}
 entity Order{
     <u>id</u>
     --
-    receiverFirstName
-    receiverLastName
     creationTime
+}
+entity Client{
+    <u>id</u>
+    --
+    firstName
+    lastName
 }
 entity OrderLine{
     --
@@ -63,8 +78,7 @@ entity Locality{
     zipCode 
     isSupported
 }
-
-entity Address{
+entity DeliveryAddress{
     <u>id</u>
     --
     isPickupPoint
@@ -72,18 +86,21 @@ entity Address{
     streetName
     box [0..1]
 }
-note top of Address : Is only created when selected,\n except for pickup points
 
+note top of DeliveryAddress : Is only created when selected,\n except for pickup points
 
 ' Relations
 Order ||--o{ OrderLine
 OrderLine }o--|| Item
 Order }o--o{ Coupon : Reductions
-Order }o--o| Address : Shipping
 Order }o--|| Employee : Encoding
-Locality ||--o{ Address
+Locality ||--o{ DeliveryAddress
 Country ||--o{ Locality
+Referent }o--o| SchoolOfThough
+Referent |o--|| DeliveryAddress
 Referent }o--o{ Item
-Referent |o--|| Address
+Item }o--|| Category
+Client }o--|| DeliveryAddress
+Client ||--o{ Order : Shipping
 
 @enduml
