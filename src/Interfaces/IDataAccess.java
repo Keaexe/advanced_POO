@@ -4,7 +4,7 @@ import Model.Item;
 
 import java.util.Dictionary;
 
-public interface DataAccess {
+public interface IDataAccess {
     Dictionary<Integer,Item> getAllItems();
     Item getItemById(Integer id);
     Integer getItemCount();

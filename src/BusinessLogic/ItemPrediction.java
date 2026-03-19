@@ -1,15 +1,14 @@
 package BusinessLogic;
 
-import Interfaces.DataAccess;
+import Interfaces.IDataAccess;
 import Model.Item;
 
-import java.util.Date;
 import java.util.stream.IntStream;
 
 public class ItemPrediction {
-    private DataAccess dataAccess;
+    private IDataAccess dataAccess;
 
-    public ItemPrediction(DataAccess dataAccess){
+    public ItemPrediction(IDataAccess dataAccess){
         this.dataAccess = dataAccess;
     }
 
