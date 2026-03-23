@@ -12,7 +12,7 @@ entity Item{
     VATPercentage
     leftInStock
     description
-    image
+    imageURL
 }
 entity Category{
     <u>name</u>
