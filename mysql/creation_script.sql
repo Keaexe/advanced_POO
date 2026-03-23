@@ -1,13 +1,18 @@
 CREATE DATABASE IF NOT EXISTS POO_ADVANCED;
 USE POO_ADVANCED;
 
+CREATE TABLE Category (
+    name VARCHAR(100) PRIMARY KEY,
+    description TEXT
+);
+
 CREATE TABLE Country (
     name VARCHAR(50) PRIMARY KEY,
     isSupported BOOLEAN NOT NULL
 );
 
 CREATE TABLE Employee (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(100) NOT NULL,
     hiringDate DATE NOT NULL,
@@ -20,17 +25,19 @@ CREATE TABLE Coupon (
 );
 
 CREATE TABLE Item (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     priceExVAT DECIMAL(8, 2) NOT NULL,
     VATPercentage DECIMAL(5, 2) NOT NULL,
     leftInStock INT NOT NULL,
     description TEXT NOT NULL,
-    image VARCHAR(255) NOT NULL
+    imagePath VARCHAR(255) NOT NULL,
+    categoryName VARCHAR(100) NOT NULL,
+    FOREIGN KEY (categoryName) REFERENCES Category(name)
 );
 
 CREATE TABLE Locality (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     zipCode VARCHAR(20),
     isSupported BOOLEAN,
@@ -38,8 +45,8 @@ CREATE TABLE Locality (
     FOREIGN KEY (countryName) REFERENCES Country(name)
 );
 
-CREATE TABLE Address (
-    id INT PRIMARY KEY,
+CREATE TABLE DeliveryAddress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     isPickupPoint BOOLEAN,
     numInStreet VARCHAR(20),
     streetName VARCHAR(255),
@@ -48,28 +55,42 @@ CREATE TABLE Address (
     FOREIGN KEY (localityId) REFERENCES Locality(id)
 );
 
+CREATE TABLE Client (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(50),
+    lastName VARCHAR(100),
+    deliveryAddressId INT,
+    FOREIGN KEY (deliveryAddressId) REFERENCES DeliveryAddress(id)
+);
+
+CREATE TABLE SchoolOfThough (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    description TEXT
+);
+
 CREATE TABLE Referent (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     designation VARCHAR(25) NOT NULL,
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(100) NOT NULL,
     birthDate DATE NOT NULL,
     isAlive BOOLEAN NOT NULL,
-    address INT NOT NULL,
+    deliveryAddressId INT NOT NULL,
     website VARCHAR(255) NULL,
     nickname VARCHAR(100) NULL,
-    FOREIGN KEY (address) REFERENCES Address(id)
+    schoolOfThoughId INT NULL,
+    FOREIGN KEY (deliveryAddressId) REFERENCES DeliveryAddress(id),
+    FOREIGN KEY (schoolOfThoughId) REFERENCES SchoolOfThough(id)
 );
 
 CREATE TABLE OrderTable (
-    id INT PRIMARY KEY,
-    receiverFirstName VARCHAR(100) NOT NULL,
-    receiverLastName VARCHAR(100) NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     creationTime DATETIME NOT NULL,
     employeeId INT NOT NULL,
-    shippingAddressId INT NOT NULL,
+    clientId INT NOT NULL,
     FOREIGN KEY (employeeId) REFERENCES Employee(id),
-    FOREIGN KEY (shippingAddressId) REFERENCES Address(id)
+    FOREIGN KEY (clientId) REFERENCES Client(id)
 );
 
 CREATE TABLE OrderLine (
