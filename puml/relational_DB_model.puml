@@ -128,5 +128,4 @@ OrderCoupon::couponCode --> Coupon::code
 
 ItemReferent::itemId --> Item::id
 ItemReferent::referentId --> Referent::id
-Referent::address --> DeliveryAddress::id
 @enduml
