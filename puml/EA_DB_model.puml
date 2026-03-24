@@ -97,7 +97,6 @@ Order }o--|| Employee : Encoding
 Locality ||--o{ DeliveryAddress
 Country ||--o{ Locality
 Referent }o--o| SchoolOfThough
-Referent |o--|| DeliveryAddress
 Referent }o--o{ Item
 Item }o--|| Category
 Client }o--|| DeliveryAddress
