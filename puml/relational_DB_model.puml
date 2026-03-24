@@ -30,7 +30,6 @@ entity Referent{
   nickname [0..1]
   website [0..1]
   schoolOfThoughId
-  deliveryAddressId
 }
 entity SchoolOfThough{
   <u>id</u>
@@ -110,7 +109,6 @@ entity ItemReferent{
 Item::categoryName --> Category::name
 
 Referent::schoolOfThoughId --> SchoolOfThough::id
-Referent::deliveryAddressId --> DeliveryAddress::id
 
 Order::employeeId --> Employee::id
 Order::clientId --> Client::id

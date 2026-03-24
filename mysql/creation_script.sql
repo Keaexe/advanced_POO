@@ -76,11 +76,9 @@ CREATE TABLE Referent (
     lastName VARCHAR(100) NOT NULL,
     birthDate DATE NOT NULL,
     isAlive BOOLEAN NOT NULL,
-    deliveryAddressId INT NOT NULL,
     website VARCHAR(255) NULL,
     nickname VARCHAR(100) NULL,
     schoolOfThoughId INT NULL,
-    FOREIGN KEY (deliveryAddressId) REFERENCES DeliveryAddress(id),
     FOREIGN KEY (schoolOfThoughId) REFERENCES SchoolOfThough(id)
 );
 
