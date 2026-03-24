@@ -3,7 +3,7 @@ package BusinessLogic;
 import Interfaces.IDataAccess;
 import Model.Item;
 
-import java.util.stream.IntStream;
+import java.util.Random;
 
 public class ItemPrediction {
     private IDataAccess dataAccess;
@@ -12,9 +12,13 @@ public class ItemPrediction {
         this.dataAccess = dataAccess;
     }
 
-    public Item getPrediction(String message){
-        IntStream asciiCodes = message.chars();
-        Integer totalAscii = asciiCodes.sum();
-        return dataAccess.getItemById(totalAscii % dataAccess.getItemCount());
+    public Item getPrediction(String message) throws Exception{
+        Integer hash = message.hashCode();
+        var generator = new Random();
+        try{
+            return dataAccess.getItemById((hash + generator.nextInt(10000)) % dataAccess.getItemCount());
+        }catch (Exception e){
+            throw new Exception(e.getMessage()); // CHANGE LATER !!!!
+        }
     }
 }
