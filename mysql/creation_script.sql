@@ -1,17 +1,17 @@
 CREATE DATABASE IF NOT EXISTS POO_ADVANCED;
 USE POO_ADVANCED;
 
-CREATE TABLE Category (
+CREATE TABLE category (
     name VARCHAR(100) PRIMARY KEY,
     description TEXT NOT NULL
 );
 
-CREATE TABLE Country (
+CREATE TABLE country (
     name VARCHAR(50) PRIMARY KEY,
     is_supported BOOLEAN NOT NULL
 );
 
-CREATE TABLE Employee (
+CREATE TABLE employee (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -19,12 +19,12 @@ CREATE TABLE Employee (
     salary DECIMAL(8, 2) NOT NULL
 );
 
-CREATE TABLE Coupon (
+CREATE TABLE coupon (
     code VARCHAR(20) PRIMARY KEY,
     discount_percentage DECIMAL(5, 2) NOT NULL
 );
 
-CREATE TABLE Item (
+CREATE TABLE item (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     price_ex_vat DECIMAL(8, 2) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Item (
     FOREIGN KEY (category_name) REFERENCES Category(name)
 );
 
-CREATE TABLE Locality (
+CREATE TABLE locality (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     zipCode VARCHAR(20) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE Locality (
     FOREIGN KEY (country_name) REFERENCES Country(name)
 );
 
-CREATE TABLE DeliveryAddress (
+CREATE TABLE delivery_address (
     id INT AUTO_INCREMENT PRIMARY KEY,
     is_pickup_point BOOLEAN NOT NULL,
     num_in_street VARCHAR(20) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE DeliveryAddress (
     FOREIGN KEY (locality_id) REFERENCES Locality(id)
 );
 
-CREATE TABLE Client (
+CREATE TABLE client (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -63,13 +63,13 @@ CREATE TABLE Client (
     FOREIGN KEY (delivery_address_id) REFERENCES DeliveryAddress(id)
 );
 
-CREATE TABLE SchoolOfThought (
+CREATE TABLE school_of_thought (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL
 );
 
-CREATE TABLE Referent (
+CREATE TABLE referent (
     id INT AUTO_INCREMENT PRIMARY KEY,
     designation VARCHAR(100) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE Referent (
     FOREIGN KEY (school_of_thought_id) REFERENCES SchoolOfThought(id)
 );
 
-CREATE TABLE OrderTable (
+CREATE TABLE order (
     id INT AUTO_INCREMENT PRIMARY KEY,
     creation_time DATETIME NOT NULL,
     employee_id INT NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE OrderTable (
     FOREIGN KEY (client_id) REFERENCES Client(id)
 );
 
-CREATE TABLE OrderLine (
+CREATE TABLE oder_line (
     order_id INT NOT NULL,
     item_id INT NOT NULL,
     quantity INT NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE OrderLine (
     FOREIGN KEY (itemId) REFERENCES Item(id)
 );
 
-CREATE TABLE OrderCoupon (
+CREATE TABLE order_coupon (
     order_id INT NOT NULL,
     coupon_code VARCHAR(20) NOT NULL,
     PRIMARY KEY (order_id, coupon_code),
@@ -109,7 +109,7 @@ CREATE TABLE OrderCoupon (
     FOREIGN KEY (coupon_code) REFERENCES Coupon(code)
 );
 
-CREATE TABLE ItemReferent (
+CREATE TABLE item_referent (
     item_id INT NOT NULL,
     referent_id INT NOT NULL,
     PRIMARY KEY (itemId, referent_id),
