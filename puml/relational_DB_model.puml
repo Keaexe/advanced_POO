@@ -3,127 +3,127 @@ title BDD - Relational model
 !theme plain
 hide circle
 
-entity Item{
+entity item{
   <u>id</u>
   --
   name
-  priceExVAT
-  VATPercentage
-  leftInStock
+  price_ex_vat
+  vat_percentage
+  left_in_stock
   description
-  imageURL
-  categoryName
+  image_url
+  category_name
 }
-entity Category{
+entity category{
   <u>name</u>
   --
   description
 }
-entity Referent{
+entity referent{
   <u>id</u>
   --
   designation
-  firstName
-  lastName
-  birthDate
-  isAlive 
+  first_name
+  last_name
+  birth_date
+  is_alive 
   nickname [0..1]
   website [0..1]
-  schoolOfThoughId
+  school_of_thought_id
 }
-entity SchoolOfThough{
+entity school_of_thought{
   <u>id</u>
   --
   name
   description
 }
-entity Order{
+entity order{
   <u>id</u>
   --
-  creationTime
-  employeeId
-  clientId
+  creation_time
+  employee_id
+  client_id
 }
-entity Client{
+entity client{
   <u>id</u>
   --
-  firstName
-  lastName
-  deliveryAddressId
+  first_name
+  last_name
+  delivery_address_id
 }
-entity OrderLine{
-  <u>orderId</u>
-  <u>itemId</u>
+entity order_line{
+  <u>order_id</u>
+  <u>item_id</u>
   --
   quantity
-  priceAtTheTime
+  price_at_the_time
 }
 
 
-entity Coupon{
+entity coupon{
   <u>code</u>
   --
-  discountPercentage
+  discount_percentage
 }
 
-entity Employee{
+entity employee{
   <u>id</u>
   --
-  firstName
-  lastName
-  hiringDate
+  first_name
+  last_name
+  hiring_date
   salary
 }
-entity Country{
+entity country{
   <u>name</u>
   --
-  isSupported 
+  is_supported 
 }
-entity Locality{
+entity locality{
   <u>id</u>
   --
   name
-  zipCode
-  isSupported 
-  countryName
+  zip_code
+  is_supported 
+  country_name
 }
-entity DeliveryAddress{
+entity delivery_address{
   <u>id</u>
   --
-  isPickupPoint 
-  numInStreet
-  streetName
+  is_pickup_point 
+  num_in_street
+  street_name
   box [0..1]
-  localityId
+  locality_id
 }
 
-entity OrderCoupon{
-  <u>orderId</u>
-  <u>couponCode</u>
+entity order_coupon{
+  <u>order_id</u>
+  <u>coupon_code</u>
 }
-entity ItemReferent{
-  <u>itemId</u>
-  <u>referentId</u>
+entity item_referent{
+  <u>item_id</u>
+  <u>referent_id</u>
 }
 
-Item::categoryName --> Category::name
+item::category_name --> category::name
 
-Referent::schoolOfThoughId --> SchoolOfThough::id
+referent::school_of_thought_id --> school_of_thought::id
 
-Order::employeeId --> Employee::id
-Order::clientId --> Client::id
+order::employee_id --> employee::id
+order::client_id --> client::id
 
-Client::deliveryAddressId --> DeliveryAddress::id
+client::delivery_address_id --> delivery_address::id
 
-OrderLine::orderId --> Order::id
-OrderLine::itemId --> Item::id
+order_line::order_id --> order::id
+order_line::item_id --> item::id
 
-Locality::countryName --> Country::name
-DeliveryAddress::localityId --> Locality::id
+locality::country_name --> country::name
+delivery_address::locality_id --> locality::id
 
-OrderCoupon::orderId --> Order::id
-OrderCoupon::couponCode --> Coupon::code
+order_coupon::order_id --> order::id
+order_coupon::coupon_code --> coupon::code
 
-ItemReferent::itemId --> Item::id
-ItemReferent::referentId --> Referent::id
+item_referent::item_id --> item::id
+item_referent::referent_id --> referent::id
 @enduml

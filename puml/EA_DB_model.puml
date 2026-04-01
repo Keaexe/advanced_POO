@@ -4,102 +4,102 @@ title BDD - Conceptual model
 hide circle
 skinparam linetype ortho
 
-entity Item{
+entity item{
     <u>id</u>
     --
     name
-    priceExVAT
-    VATPercentage
-    leftInStock
+    price_ex_vat
+    vat_percentage
+    left_in_stock
     description
     imageURL
 }
-entity Category{
+entity category{
     <u>name</u>
     --
     description
 }
-entity Referent{
+entity referent{
     <u>id</u>
     --
     designation
-    firstName
-    lastName
-    birthDate
+    first_name
+    last_name
+    birth_date
     isAlive
     nickname[0..1]
     website [0..1]
 }
-entity SchoolOfThough{
+entity school_of_thought{
     <u>id</u>
     --
     name
     description
 }
-entity Order{
+entity order{
     <u>id</u>
     --
-    creationTime
+    creation_time
 }
-entity Client{
+entity client{
     <u>id</u>
     --
-    firstName
-    lastName
+    first_name
+    last_name
 }
-entity OrderLine{
+entity order_line{
     --
     quantity
-    priceAtTheTime
+    price_at_the_time
 }
-note top of OrderLine : id(OrderLine) : id(Order), id(Item)
-entity Coupon{
+note top of order_line : id(order_line) : id(order), id(item)
+entity coupon{
     <u>code</u>
     --
-    discountPercentage
+    discount_percentage
 }
-entity Employee {
+entity employee {
     <u>id</u>
     --
-    firstName
-    lastName
-    hiringDate
+    first_name
+    last_name
+    hiring_date
     salary
 }
-entity Country{
+entity country{
     <u>name</u>
     --
-    isSupported
+    is_supported
 }
-entity Locality{
+entity locality{
     <u>id</u>
     --
     name 
-    zipCode 
-    isSupported
+    zip_code 
+    is_supported
 }
-entity DeliveryAddress{
+entity delivery_address{
     <u>id</u>
     --
-    isPickupPoint
-    numInStreet
-    streetName
+    is_pickup_point
+    num_in_street
+    street_name
     box [0..1]
 }
 
-note top of DeliveryAddress : Is only created when selected,\n except for pickup points
+note top of delivery_address : Is only created when selected,\n except for pickup points
 
 ' Relations
-Order ||--o{ OrderLine
-OrderLine }o--|| Item
-Order }o--o{ Coupon : Reductions
-Order }o--|| Employee : Encoding
-Locality ||--o{ DeliveryAddress
-Country ||--o{ Locality
-Referent }o--o| SchoolOfThough
-Referent }o--o{ Item
-Item }o--|| Category
-Client }o--|| DeliveryAddress
-Client ||--o{ Order : Shipping
+order ||--o{ order_line
+order_line }o--|| item
+order }o--o{ coupon : Reductions
+order }o--|| employee : Encoding
+locality ||--o{ delivery_address
+country ||--o{ locality
+referent }o--o| school_of_thought
+referent }o--o{ item
+item }o--|| category
+client }o--|| delivery_address
+client ||--o{ order : Shipping
 
 @enduml
