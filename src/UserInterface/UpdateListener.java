@@ -5,12 +5,12 @@ import Interfaces.IController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SearchListener implements ActionListener {
+public class UpdateListener implements ActionListener {
     private IController controller;
 
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        controller.displaySearch();
+        controller.displayUpdate();
     }
 }
