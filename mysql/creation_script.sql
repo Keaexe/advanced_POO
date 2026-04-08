@@ -33,7 +33,7 @@ CREATE TABLE item (
     description TEXT NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     category_name VARCHAR(100) NOT NULL,
-    FOREIGN KEY (category_name) REFERENCES Category(name)
+    FOREIGN KEY (category_name) REFERENCES category(name)
 );
 
 CREATE TABLE locality (
@@ -42,7 +42,7 @@ CREATE TABLE locality (
     zipCode VARCHAR(20) NOT NULL,
     is_supported BOOLEAN NOT NULL,
     country_name VARCHAR(50) NOT NULL,
-    FOREIGN KEY (country_name) REFERENCES Country(name)
+    FOREIGN KEY (country_name) REFERENCES country(name)
 );
 
 CREATE TABLE delivery_address (
@@ -52,7 +52,7 @@ CREATE TABLE delivery_address (
     street_name VARCHAR(255) NOT NULL,
     box VARCHAR(10) NULL,
     locality_id INT NOT NULL,
-    FOREIGN KEY (locality_id) REFERENCES Locality(id)
+    FOREIGN KEY (locality_id) REFERENCES locality(id)
 );
 
 CREATE TABLE client (
@@ -60,7 +60,7 @@ CREATE TABLE client (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     delivery_address_id INT NOT NULL,
-    FOREIGN KEY (delivery_address_id) REFERENCES DeliveryAddress(id)
+    FOREIGN KEY (delivery_address_id) REFERENCES delivery_adress(id)
 );
 
 CREATE TABLE school_of_thought (
@@ -79,7 +79,7 @@ CREATE TABLE referent (
     website VARCHAR(255) NULL,
     nickname VARCHAR(100) NULL,
     school_of_thought_id INT NULL,
-    FOREIGN KEY (school_of_thought_id) REFERENCES SchoolOfThought(id)
+    FOREIGN KEY (school_of_thought_id) REFERENCES school_of_thought(id)
 );
 
 CREATE TABLE order (
@@ -87,8 +87,8 @@ CREATE TABLE order (
     creation_time DATETIME NOT NULL,
     employee_id INT NOT NULL,
     client_id INT NOT NULL,
-    FOREIGN KEY (employee_id) REFERENCES Employee(id),
-    FOREIGN KEY (client_id) REFERENCES Client(id)
+    FOREIGN KEY (employee_id) REFERENCES employee(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
 CREATE TABLE oder_line (
@@ -97,22 +97,22 @@ CREATE TABLE oder_line (
     quantity INT NOT NULL,
     price_at_the_time DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (order_id, itemId),
-    FOREIGN KEY (order_id) REFERENCES OrderTable(id),
-    FOREIGN KEY (itemId) REFERENCES Item(id)
+    FOREIGN KEY (order_id) REFERENCES order_table(id),
+    FOREIGN KEY (itemId) REFERENCES item(id)
 );
 
 CREATE TABLE order_coupon (
     order_id INT NOT NULL,
     coupon_code VARCHAR(20) NOT NULL,
     PRIMARY KEY (order_id, coupon_code),
-    FOREIGN KEY (order_id) REFERENCES OrderTable(id),
-    FOREIGN KEY (coupon_code) REFERENCES Coupon(code)
+    FOREIGN KEY (order_id) REFERENCES order_table(id),
+    FOREIGN KEY (coupon_code) REFERENCES coupon(code)
 );
 
 CREATE TABLE item_referent (
     item_id INT NOT NULL,
     referent_id INT NOT NULL,
     PRIMARY KEY (itemId, referent_id),
-    FOREIGN KEY (itemId) REFERENCES Item(id),
-    FOREIGN KEY (referent_id) REFERENCES Referent(id)
+    FOREIGN KEY (itemId) REFERENCES item(id),
+    FOREIGN KEY (referent_id) REFERENCES referent(id)
 );
