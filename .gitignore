@@ -30,6 +30,7 @@ bin/
 .DS_Store
 
 ## Docker ##
-compose.yaml
+# compose.yaml
 
+## IntelliJ ##
 .idea
