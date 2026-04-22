@@ -89,6 +89,10 @@ public class MainWindow extends JFrame implements IUserInterface {
         mainContainer = this.getContentPane();
         mainContainer.add(menuBar);
         mainContainer.add(monkPanel);
+
+        var thread = new FloatingThread(monkPanel);
+        thread.start();
+
         setVisible(true);
     }
 
