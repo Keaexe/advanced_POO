@@ -18,7 +18,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     public MainWindow(){
         super("Advanced_POO");
-        setBounds(150, 150, 600, 1500);
+        setBounds(100, 50, 1500, 1000);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -33,7 +33,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         menuBar.add(systemMenu);
         modifications = new JMenu("Modify");
         modifications.setMnemonic('M');
-        modifications.add(modifications);
+        menuBar.add(modifications);
         search = new JMenu("Search");
         search.setMnemonic('F');
         menuBar.add(search);
@@ -45,7 +45,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         systemMenu.add(exit);
 
         referentCr = new JMenuItem("Encode");
-        referentCr.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        referentCr.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
         CreateListener createListener = new CreateListener();
         referentCr.addActionListener(createListener);
         modifications.add(referentCr);
@@ -73,8 +73,15 @@ public class MainWindow extends JFrame implements IUserInterface {
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
-        mainContainer = this.getContentPane();
+
         monkPanel = new MonkPanel();
+        JLabel label = new JLabel();
+        label.setIcon(new ImageIcon(
+                new ImageIcon("C:\\Users\\mof39\\Downloads\\xmas\\20211225_163232.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+        monkPanel.add(label);
+
+        mainContainer = this.getContentPane();
+        mainContainer.add(menuBar);
         mainContainer.add(monkPanel);
         setVisible(true);
     }
