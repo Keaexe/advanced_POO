@@ -18,7 +18,10 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     public MainWindow(){
         super("Advanced_POO");
-        setBounds(100, 50, 1500, 1000);
+
+        final int WINDOW_WIDTH = 1500;
+        final int WINDOW_HEIGHT = 1000;
+        setBounds(100, 50, WINDOW_WIDTH, WINDOW_HEIGHT);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -75,9 +78,12 @@ public class MainWindow extends JFrame implements IUserInterface {
 
 
         monkPanel = new MonkPanel();
+        monkPanel.setLayout(null);
         JLabel label = new JLabel();
+        final int MONK_WIDTH = 100;
         label.setIcon(new ImageIcon(
-                new ImageIcon("C:\\Users\\mof39\\Downloads\\xmas\\20211225_163232.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+                new ImageIcon("ressources/monk.png").getImage().getScaledInstance(MONK_WIDTH, MONK_WIDTH + 10, Image.SCALE_SMOOTH)));
+        label.setBounds(WINDOW_WIDTH - MONK_WIDTH, WINDOW_HEIGHT - (int)(MONK_WIDTH * 1.65), MONK_WIDTH, MONK_WIDTH + 10);
         monkPanel.add(label);
 
         mainContainer = this.getContentPane();
