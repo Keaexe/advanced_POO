@@ -10,7 +10,7 @@ public class DBAccess implements IDataAccess {
     Connection connection;
 
     public DBAccess() throws SQLException{
-        Connection connection =
+        this.connection =
                 DriverManager.getConnection("jdbc:mysql://localhost:3306/POO_ADVANCED","root", "root");
     }
 
@@ -35,26 +35,27 @@ public class DBAccess implements IDataAccess {
     }
 
     public void addReferent(Referent referent) throws SQLException {
-        String sqlString = "insert into referent (id, designation, first_name, last_name, birth_date, is_alive, school_thought_id, website, nickname) values (?,?,?,?,?,?,?,?,?)";
-
+        String sqlString = "insert into referent (designation, first_name, last_name, birth_date, is_alive," +
+                " school_of_thought_id, website, nickname) values (?,?,?,?,?,?,?,?)";
+        // Pas d'id car AUTO_INCREMENT
         PreparedStatement sqlStat = connection.prepareStatement(sqlString);
-        sqlStat.setInt(1, referent.getId());
-        sqlStat.setString(2, referent.getDesignation());
-        sqlStat.setString(3, referent.getFirstName());
-        sqlStat.setString(4, referent.getLastName());
-        sqlStat.setDate(5, Date.valueOf(referent.getBirthDate()));
-        sqlStat.setBoolean(6, referent.getIsAlive());
-        sqlStat.setInt(7, referent.getIdSchoolOfThought());
+        sqlStat.setString(1, referent.getDesignation());
+        sqlStat.setString(2, referent.getFirstName());
+        sqlStat.setString(3, referent.getLastName());
+        sqlStat.setDate(4, Date.valueOf(referent.getBirthDate()));
+        sqlStat.setBoolean(5, referent.getIsAlive());
+        sqlStat.setInt(6, referent.getIdSchoolOfThought());
         if (referent.getWebsite() != null){
-            sqlStat.setString(8, referent.getWebsite());
+            sqlStat.setString(7, referent.getWebsite());
+        } else {
+            sqlStat.setNull(7, Types.VARCHAR);
+        }
+        if (referent.getNickname() != null){
+            sqlStat.setString(8, referent.getNickname());
         } else {
             sqlStat.setNull(8, Types.VARCHAR);
         }
-        if (referent.getNickname() != null){
-            sqlStat.setString(9, referent.getNickname());
-        } else {
-            sqlStat.setNull(9, Types.VARCHAR);
-        }
+
         sqlStat.executeUpdate();
     }
 }
