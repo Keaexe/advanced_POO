@@ -11,7 +11,7 @@ public class DBAccess implements IDataAccess {
 
     public DBAccess() throws SQLException{
         Connection connection =
-                DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root", "root");
+                DriverManager.getConnection("jdbc:mysql://localhost:3306/POO_ADVANCED","root", "root");
     }
 
     public Dictionary<Integer, Item> getAllItems() {
