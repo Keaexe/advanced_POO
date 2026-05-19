@@ -35,7 +35,7 @@ public class DBAccess implements IDataAccess {
     }
 
     public void addReferent(Referent referent) throws SQLException {
-        String sqlString = "insert into referent (id, designation, first_name, last_name, birth_date, is_alive, school_thought_id) values (?,?,?,?,?,?,?,?,?)";
+        String sqlString = "insert into referent (id, designation, first_name, last_name, birth_date, is_alive, school_thought_id, website, nickname) values (?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement sqlStat = connection.prepareStatement(sqlString);
         sqlStat.setInt(1, referent.getId());
