@@ -7,4 +7,5 @@ public interface IUserInterface {
     void displayDelete();
     void displayItemSearch();
     void displayReferentSearch();
+    void displayModification();
 }

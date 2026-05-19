@@ -10,11 +10,32 @@ public class Controller implements IController {
         System.exit(0);
     }
     @Override
-    public void displayModification() {
-        ui.displayModification();
-    }
-    @Override
     public void displaySearch() {
         ui.displaySearch();
+    }
+
+    @Override
+    public void displayCreate() {
+
+    }
+
+    @Override
+    public void displayUpdate() {
+
+    }
+
+    @Override
+    public void displayDelete() {
+
+    }
+
+    @Override
+    public void displayItemSearch() {
+
+    }
+
+    @Override
+    public void displayReferentSearch() {
+
     }
 }
