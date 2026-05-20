@@ -6,13 +6,13 @@ import Model.Referent;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Dictionary;
+import java.util.ArrayList;
 
 public class DBAccess implements IDataAccess {
 
     public DBAccess() throws SQLException {}
 
-    public Dictionary<Integer, Item> getAllItems() {
+    public ArrayList<Item> getAllItems() {
         return null;
     }
 
@@ -48,8 +48,31 @@ public class DBAccess implements IDataAccess {
         return referent;
     }
 
-    public Dictionary<Integer, Referent> getAllReferent() {
-        return null;
+    public ArrayList<Referent> getAllReferent() throws SQLException {
+        PreparedStatement sqlStat =
+            SingletonConnection.getInstance().prepareStatement(
+                "select * from referent;"
+            );
+        ResultSet data = sqlStat.executeQuery();
+        var referents = new ArrayList<Referent>();
+        while (data.next()) {}
+        referents.addLast(
+            new Referent(
+                data.getInt("id"),
+                data.getString("designation"),
+                data.getString("first_name"),
+                data.getString("last_name"),
+                LocalDate.ofInstant(
+                    data.getDate("birth_date").toInstant(),
+                    ZoneId.systemDefault()
+                ),
+                data.getBoolean("is_alive"),
+                data.getInt("school_of_thought"),
+                data.getString("website"),
+                data.getString("nickname")
+            )
+        );
+        return referents;
     }
 
     public void addReferent(Referent referent) throws SQLException {
