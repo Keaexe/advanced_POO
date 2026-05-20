@@ -1,11 +1,14 @@
 package Interfaces;
 
-import Model.Item;
+import java.util.ArrayList;
 
-import java.util.Dictionary;
+import Model.*;
 
 public interface IDataAccess {
-    Dictionary<Integer,Item> getAllItems();
-    Item getItemById(Integer id) throws Exception;
+    ArrayList<Item> getAllItems() throws Exception;
+    Item getItemById(int id) throws Exception;
     Integer getItemCount() throws Exception;
+    Referent getReferentById(int id) throws Exception;
+    ArrayList<Referent> getAllReferent() throws Exception;
+    void addReferent(Referent referent) throws Exception;
 }
