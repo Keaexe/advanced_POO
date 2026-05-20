@@ -1,0 +1,118 @@
+CREATE DATABASE IF NOT EXISTS POO_ADVANCED;
+USE POO_ADVANCED;
+
+CREATE TABLE category (
+    name VARCHAR(100) PRIMARY KEY,
+    description TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE country (
+    name VARCHAR(50) PRIMARY KEY,
+    is_supported BOOLEAN NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE employee (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    hiring_date DATE NOT NULL,
+    salary DECIMAL(8, 2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE coupon (
+    code VARCHAR(20) PRIMARY KEY,
+    discount_percentage DECIMAL(5, 2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE item (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price_ex_vat DECIMAL(8, 2) NOT NULL,
+    vat_percentage DECIMAL(5, 2) NOT NULL,
+    left_in_stock INT NOT NULL,
+    description TEXT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    category_name VARCHAR(100) NOT NULL,
+    FOREIGN KEY (category_name) REFERENCES category(name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE locality (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    zipCode VARCHAR(20) NOT NULL,
+    is_supported BOOLEAN NOT NULL,
+    country_name VARCHAR(50) NOT NULL,
+    FOREIGN KEY (country_name) REFERENCES country(name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE delivery_address (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    is_pickup_point BOOLEAN NOT NULL,
+    num_in_street VARCHAR(20) NOT NULL,
+    street_name VARCHAR(255) NOT NULL,
+    box VARCHAR(10) NULL,
+    locality_id INT NOT NULL,
+    FOREIGN KEY (locality_id) REFERENCES locality(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE client (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    delivery_address_id INT NOT NULL,
+    FOREIGN KEY (delivery_address_id) REFERENCES delivery_address(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE school_of_thought (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE referent (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    designation VARCHAR(100) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    birth_date DATE NOT NULL,
+    is_alive BOOLEAN NOT NULL,
+    website VARCHAR(255) NULL,
+    nickname VARCHAR(100) NULL,
+    school_of_thought_id INT NULL,
+    FOREIGN KEY (school_of_thought_id) REFERENCES school_of_thought(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE order_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    creation_time DATETIME NOT NULL,
+    employee_id INT NOT NULL,
+    client_id INT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE oder_line (
+    order_id INT NOT NULL,
+    item_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price_at_the_time DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (order_id, item_id),
+    FOREIGN KEY (order_id) REFERENCES order_table(id),
+    FOREIGN KEY (item_id) REFERENCES item(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE order_coupon (
+    order_id INT NOT NULL,
+    coupon_code VARCHAR(20) NOT NULL,
+    PRIMARY KEY (order_id, coupon_code),
+    FOREIGN KEY (order_id) REFERENCES order_table(id),
+    FOREIGN KEY (coupon_code) REFERENCES coupon(code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE item_referent (
+    item_id INT NOT NULL,
+    referent_id INT NOT NULL,
+    PRIMARY KEY (item_id, referent_id),
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    FOREIGN KEY (referent_id) REFERENCES referent(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
