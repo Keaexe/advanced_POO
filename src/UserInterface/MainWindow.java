@@ -61,8 +61,8 @@ public class MainWindow extends JFrame implements IUserInterface {
         modifications.addSeparator();
         referentDel = new JMenuItem("Delete");
         referentDel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
-        DeleteListener DelifyListener = new DeleteListener();
-        referentDel.addActionListener(DelifyListener);
+        DeleteListener deleteListener = new DeleteListener();
+        referentDel.addActionListener(deleteListener);
         modifications.add(referentDel);
 
         referentSearch = new JMenuItem("Referent");
@@ -82,7 +82,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         JLabel label = new JLabel();
         final int MONK_WIDTH = 100;
         label.setIcon(new ImageIcon(
-                new ImageIcon("ressources/monk.png").getImage().getScaledInstance(MONK_WIDTH, MONK_WIDTH + 10, Image.SCALE_SMOOTH)));
+                new ImageIcon("resources/monk.png").getImage().getScaledInstance(MONK_WIDTH, MONK_WIDTH + 10, Image.SCALE_SMOOTH)));
         label.setBounds(WINDOW_WIDTH - MONK_WIDTH, WINDOW_HEIGHT - (int)(MONK_WIDTH * 1.65), MONK_WIDTH, MONK_WIDTH + 10);
         monkPanel.add(label);
 

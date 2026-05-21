@@ -17,7 +17,7 @@ public class FloatingThread extends Thread{
             try {
                 sleep(60);
             } catch (InterruptedException e) {
-                System.out.println("Monk animation has encountered an error");
+                System.out.println("Monk animation has encountered an error"); // TO MODIFY
                 break;
             }
             i ++;
