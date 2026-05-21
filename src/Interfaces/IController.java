@@ -2,10 +2,9 @@ package Interfaces;
 
 public interface IController {
     void exit();
-    void displaySearch();
-    void displayCreate();
-    void displayUpdate();
-    void displayDelete();
+    void displayCreateReferent();
+    void displayUpdateReferent();
+    void displayDeleteReferent();
     void displayItemSearch();
     void displayReferentSearch();
 }
