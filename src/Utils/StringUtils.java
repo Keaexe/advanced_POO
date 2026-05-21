@@ -1,6 +1,6 @@
 package Utils;
 
-import Exception.ValidationException;
+import Exceptions.ValidationException;
 
 public final class StringUtils {
 
