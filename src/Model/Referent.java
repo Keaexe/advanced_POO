@@ -1,5 +1,7 @@
 package Model;
 
+import Utils.StringUtils;
+
 import java.time.LocalDate;
 
 public class Referent {
@@ -23,6 +25,11 @@ public class Referent {
         this.nickname = nickname;
     }
 
+    public Referent(Integer id, String designation, String firstName, String lastName,LocalDate birthDate,
+                    Boolean isAlive, Integer idSchoolOfThought){
+        this(id,designation,firstName,lastName,birthDate,isAlive,idSchoolOfThought, null, null);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -30,13 +37,23 @@ public class Referent {
     public String getDesignation() {
         return designation;
     }
+    public void setDesignation(String designation){
+        this.designation = StringUtils.requireNotBlank(designation, "designation");
+    }
 
     public String getFirstName() {
         return firstName;
     }
+    public void setFirstName(String firstName){
+        this.firstName= StringUtils.requireNotBlank(firstName, "firstName");
+    }
+
 
     public String getLastName() {
         return lastName;
+    }
+    public void setLastName(String lastName){
+        this.lastName = StringUtils.requireNotBlank(lastName, "lastName");
     }
 
     public LocalDate getBirthDate() {
@@ -54,8 +71,12 @@ public class Referent {
     public String getWebsite() {
         return website;
     }
+    public void setWebsite(String website) {
+        this.website = StringUtils.requireNotBlankNullable(website, "website");
+    }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickname() { return nickname; }
+    public void setNickname(String nickname) {
+        this.nickname = StringUtils.requireNotBlankNullable(nickname, "nickname");
     }
 }
