@@ -1,14 +1,14 @@
 package Interfaces;
 
+import Exceptions.*;
+import Model.*;
 import java.util.ArrayList;
 
-import Model.*;
-
 public interface IDataAccess {
-    ArrayList<Item> getAllItems() throws Exception;
-    Item getItemById(int id) throws Exception;
-    Integer getItemCount() throws Exception;
-    Referent getReferentById(int id) throws Exception;
-    ArrayList<Referent> getAllReferent() throws Exception;
-    void addReferent(Referent referent) throws Exception;
+    ArrayList<Item> getAllItems() throws DataAccessException;
+    Item getItemById(int id) throws DataAccessException;
+    Integer getItemCount() throws DataAccessException;
+    Referent getReferentById(int id) throws DataAccessException;
+    ArrayList<Referent> getAllReferent() throws DataAccessException;
+    void addReferent(Referent referent) throws DataAccessException;
 }
