@@ -14,7 +14,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenu systemMenu, modifications, search;
     private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
     private Container mainContainer;
-    private MonkPanel monkPanel;
+    private JPanel monkPanel;
 
     public MainWindow() {
         super("Advanced_POO");
@@ -91,7 +91,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
-        monkPanel = new MonkPanel();
+        monkPanel = new JPanel();
         monkPanel.setLayout(null);
         JLabel label = new JLabel();
         final int MONK_WIDTH = 100;

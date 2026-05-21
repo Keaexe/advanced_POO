@@ -1,16 +1,21 @@
 package UserInterface;
 
-public class FloatingThread extends Thread{
-    MonkPanel monkPanel;
-    public FloatingThread(MonkPanel monkPanel){
+import javax.swing.JPanel;
+
+public class FloatingThread extends Thread {
+
+    JPanel monkPanel;
+
+    public FloatingThread(JPanel monkPanel) {
         this.monkPanel = monkPanel;
     }
-    public void run(){
+
+    public void run() {
         Integer y = 1;
         Integer i = 0;
-        while (true){
+        while (true) {
             monkPanel.setLocation(monkPanel.getX(), monkPanel.getY() - y);
-            if (i == 30){
+            if (i == 30) {
                 i = 0;
                 y *= -1;
             }
@@ -20,7 +25,7 @@ public class FloatingThread extends Thread{
                 System.out.println("Monk animation has encountered an error"); // TO MODIFY
                 break;
             }
-            i ++;
+            i++;
         }
     }
 }
