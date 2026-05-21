@@ -36,7 +36,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         systemMenu = new JMenu("System");
         systemMenu.setMnemonic('S');
         menuBar.add(systemMenu);
-        modifications = new JMenu("Modify");
+        modifications = new JMenu("Modify referents");
         modifications.setMnemonic('M');
         menuBar.add(modifications);
         search = new JMenu("Search");
@@ -75,7 +75,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentDel.addActionListener(deleteListener);
         modifications.add(referentDel);
 
-        referentSearch = new JMenuItem("Referent");
+        referentSearch = new JMenuItem("Referents");
         referentSearch.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK)
         );
@@ -83,7 +83,7 @@ public class MainWindow extends JFrame implements IUserInterface {
             new ReferentSearchListener();
         referentSearch.addActionListener(referentSearchListener);
         search.add(referentSearch);
-        itemSearch = new JMenuItem("Item");
+        itemSearch = new JMenuItem("Items");
         itemSearch.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK)
         );
@@ -131,16 +131,13 @@ public class MainWindow extends JFrame implements IUserInterface {
     }
 
     @Override
-    public void displaySearch() {}
+    public void displayCreateReferent() {}
 
     @Override
-    public void displayCreate() {}
+    public void displayUpdateReferent() {}
 
     @Override
-    public void displayUpdate() {}
-
-    @Override
-    public void displayDelete() {}
+    public void displayDeleteReferent() {}
 
     @Override
     public void displayItemSearch() {}
