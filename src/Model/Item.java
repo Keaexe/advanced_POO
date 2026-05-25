@@ -95,4 +95,8 @@ public class Item {
     public void setImage(Image image) {
         this.image = image;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }

@@ -1,6 +1,6 @@
 package Model;
 
-import Utils.StringUtils;
+import Utils.ValidationUtils;
 
 public class DeliveryAddress {
     private Integer id, localityId;
@@ -16,13 +16,16 @@ public class DeliveryAddress {
         this.isPickupPoint = isPickupPoint;
     }
 
+    public DeliveryAddress(Integer localityId, String numInStreet, String streetName, boolean isPickupPoint, String box) {
+        this(null, localityId, numInStreet, streetName, isPickupPoint, box);
+    }
 
     public String getNumInStreet() {
         return numInStreet;
     }
 
     public void setNumInStreet(String numInStreet) {
-        this.numInStreet = StringUtils.requireNotBlank(numInStreet,"numInStreet");
+        this.numInStreet = ValidationUtils.validateString(numInStreet,"numInStreet", true, 20);
     }
 
     public String getStreetName() {
@@ -30,7 +33,7 @@ public class DeliveryAddress {
     }
 
     public void setStreetName(String streetName) {
-        this.streetName = StringUtils.requireNotBlank(streetName,"streetName");
+        this.streetName = ValidationUtils.validateString(streetName,"streetName", true, 255);
     }
 
     public String getBox() {
@@ -38,6 +41,26 @@ public class DeliveryAddress {
     }
 
     public void setBox(String box) {
-        this.box = StringUtils.requireNotBlankNullable(box,"box");
+        this.box = ValidationUtils.validateString(box,"box",false,10);
+    }
+
+    public boolean isPickupPoint() {
+        return isPickupPoint;
+    }
+
+    public void setPickupPoint(boolean pickupPoint) {
+        isPickupPoint = pickupPoint;
+    }
+
+    public Integer getLocalityId() {
+        return localityId;
+    }
+
+    public void setLocalityId(Integer localityId) {
+        this.localityId = localityId;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
