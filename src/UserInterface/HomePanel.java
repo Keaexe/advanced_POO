@@ -30,8 +30,10 @@ public class HomePanel extends JPanel {
                 "Welcome to the world where the magic happens"
             );
             welcomeMessage.setFont(new Font(Font.SERIF, Font.ITALIC, 32));
+
             monk.setHorizontalAlignment(SwingConstants.RIGHT);
             welcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
+
             this.add(monk, BorderLayout.SOUTH);
             this.add(welcomeMessage, BorderLayout.CENTER);
         } catch (NullPointerException exception) {

@@ -2,6 +2,7 @@ package UserInterface;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class FloatingThread extends Thread {
 
@@ -15,20 +16,17 @@ public class FloatingThread extends Thread {
         Integer y = 1;
         Integer i = 0;
         while (true) {
+            if (Thread.currentThread().isInterrupted()) {
+                break;
+            }
             monk.setLocation(monk.getX(), monk.getY() - y);
             if (i == 30) {
                 i = 0;
                 y *= -1;
             }
             try {
-                sleep(60);
+                sleep(100);
             } catch (InterruptedException e) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Animation has been interrupted\n(" + e.getMessage() + ")",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
                 break;
             }
             i++;

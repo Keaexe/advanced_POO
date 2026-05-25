@@ -17,6 +17,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     private Container mainContainer;
     private JPanel currentPanel;
     private IController controller;
+    private FloatingThread thread;
 
     public MainWindow(IController controller) {
         super("Advanced_POO");
@@ -138,8 +139,10 @@ public class MainWindow extends JFrame implements IUserInterface {
         try {
             HomePanel homePanel = new HomePanel();
             updateContainer(homePanel);
-            var thread = new FloatingThread(homePanel.getMonk());
-            thread.start();
+            SwingUtilities.invokeLater(() -> {
+                thread = new FloatingThread(homePanel.getMonk());
+                thread.start();
+            });
         } catch (UIException e) {
             JOptionPane.showMessageDialog(
                 this,
@@ -161,6 +164,9 @@ public class MainWindow extends JFrame implements IUserInterface {
     private void updateContainer(JPanel panel) {
         if (currentPanel != null) {
             mainContainer.remove(currentPanel);
+        }
+        if (thread != null && thread.isAlive()) {
+            thread.interrupt();
         }
         currentPanel = panel;
         try {
