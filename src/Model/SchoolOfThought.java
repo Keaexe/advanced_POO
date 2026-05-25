@@ -1,11 +1,15 @@
 package Model;
 
-import Utils.StringUtils;
+import Utils.ValidationUtils;
 
 public class SchoolOfThought {
     private Integer id;
     private String name, description;
 
+
+    public SchoolOfThought(String name, String description) {
+        this(null, name, description);
+    }
 
     public SchoolOfThought(Integer id, String name, String description) {
         this.id = id;
@@ -18,7 +22,7 @@ public class SchoolOfThought {
     }
 
     public void setName(String name) {
-        this.name = StringUtils.requireNotBlank(name, "name");
+        this.name = ValidationUtils.validateString(name, "name", true, 255);
     }
 
     public String getDescription() {
@@ -26,14 +30,11 @@ public class SchoolOfThought {
     }
 
     public void setDescription(String description) {
-        this.description = StringUtils.requireNotBlank(name,"name");
+        this.description = ValidationUtils.validateString(description,"description", true);
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
