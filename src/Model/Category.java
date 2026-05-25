@@ -1,6 +1,6 @@
 package Model;
 
-import Utils.StringUtils;
+import Utils.ValidationUtils;
 
 public class Category {
     private String name;
@@ -13,7 +13,7 @@ public class Category {
     }
 
     public void setName(String name) throws Exception {
-        this.name = StringUtils.requireNotBlank(name, "name");
+        this.name = ValidationUtils.validateString(name, "name", true, 50);
     }
 
     public String getName(){
@@ -21,7 +21,7 @@ public class Category {
     }
 
     public void setDescription(String description) throws Exception {
-        this.description = StringUtils.requireNotBlank(description, "description");
+        this.description = ValidationUtils.validateString(description, "description", true);
     }
 
     public String getDescription(){
