@@ -1,16 +1,20 @@
 package UserInterface;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class CreateRefPanel extends JPanel {
 
     private JLabel designationLabel, firstNameLabel, lastNameLabel, birthDateLabel, isAliveLabel, idSchoolOfThoughtLabel, websiteLabel, nicknameLabel, title;
-    private JTextField designation, firstName, lastName, birthDate, isAlive, idSchoolOfThought, website, nickname;
+    private JTextField designation, firstName, lastName, birthDate, isAlive, website, nickname;
+    private JComboBox<String> idSchoolOfThought;
 
     public CreateRefPanel() {
         this.setLayout(new BorderLayout());
@@ -49,9 +53,11 @@ public class CreateRefPanel extends JPanel {
 
         idSchoolOfThoughtLabel = new JLabel("School of Thought ID ");
         fieldsPanel.add(idSchoolOfThoughtLabel);
-        idSchoolOfThought = new JTextField();
+        String[] schools = { "test1", "test2", "test3" };
+        idSchoolOfThought = new JComboBox<String>(schools);
         fieldsPanel.add(idSchoolOfThought);
 
+        fieldsPanel.add(idSchoolOfThought);
         websiteLabel = new JLabel("Website ");
         fieldsPanel.add(websiteLabel);
         website = new JTextField();
