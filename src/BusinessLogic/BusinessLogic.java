@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class BusinessLogic implements IBusinessLogic {
 
     IController controller;
+    IDataAccess dataAccess;
 
     public BusinessLogic(IController controller) {
         this.controller = controller;
@@ -16,9 +17,10 @@ public class BusinessLogic implements IBusinessLogic {
     @Override
     public ArrayList<SchoolOfThought> getAllSchools()
         throws DataAccessException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-            "Unimplemented method 'getAllSchools'"
-        );
+        return dataAccess.getAllSchools();
+    }
+
+    public void setDataAccess(IDataAccess dataAccess) {
+        this.dataAccess = dataAccess;
     }
 }

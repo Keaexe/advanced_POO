@@ -59,9 +59,6 @@ public class Controller implements IController {
     @Override
     public ArrayList<SchoolOfThought> getAllSchools()
         throws DataAccessException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-            "Unimplemented method 'getAllSchools'"
-        );
+        return bL.getAllSchools();
     }
 }

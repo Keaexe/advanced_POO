@@ -119,9 +119,25 @@ public class DBAccess implements IDataAccess {
     @Override
     public ArrayList<SchoolOfThought> getAllSchools()
         throws DataAccessException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-            "Unimplemented method 'getAllSchools'"
-        );
+        try {
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(
+                    "select * from school_of_thought;"
+                );
+            ResultSet data = sqlStat.executeQuery();
+            var schools = new ArrayList<SchoolOfThought>();
+            while (data.next()) {
+                schools.addLast(
+                        new SchoolOfThought(
+                                data.getInt("id"),
+                                data.getString("name"),
+                                data.getString("description")
+                        )
+                );
+            }
+            return schools;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
     }
 }
