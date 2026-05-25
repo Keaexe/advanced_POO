@@ -15,7 +15,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenu systemMenu, modifications, search;
     private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
     private Container mainContainer;
-    private HomePanel homePanel;
+    private JPanel currentPanel;
 
     public MainWindow() {
         super("Advanced_POO");
@@ -92,8 +92,12 @@ public class MainWindow extends JFrame implements IUserInterface {
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
+        mainContainer = this.getContentPane();
         try {
-            this.homePanel = new HomePanel();
+            HomePanel homePanel = new HomePanel();
+            mainContainer.add(homePanel);
+            var thread = new FloatingThread(homePanel.getMonk());
+            thread.start();
         } catch (UIException e) {
             JOptionPane.showMessageDialog(
                 this,
@@ -101,14 +105,6 @@ public class MainWindow extends JFrame implements IUserInterface {
                 "Error",
                 JOptionPane.ERROR_MESSAGE
             );
-        }
-
-        mainContainer = this.getContentPane();
-        mainContainer.add(menuBar);
-        mainContainer.add(homePanel);
-        var thread = new FloatingThread(homePanel.getMonk());
-        try {
-            thread.start();
         } catch (IllegalThreadStateException e) {
             JOptionPane.showMessageDialog(
                 this,
@@ -122,17 +118,35 @@ public class MainWindow extends JFrame implements IUserInterface {
     }
 
     @Override
-    public void displayCreateReferent() {}
+    public void displayCreateReferent() {
+        updateContainer(new CreateRefPanel());
+    }
 
     @Override
-    public void displayUpdateReferent() {}
+    public void displayUpdateReferent() {
+        updateContainer(new UpdateRefPanel());
+    }
 
     @Override
-    public void displayDeleteReferent() {}
+    public void displayDeleteReferent() {
+        updateContainer(new DeleteRefPanel());
+    }
 
     @Override
-    public void displayItemSearch() {}
+    public void displayItemSearch() {
+        updateContainer(new ReadItemPanel());
+    }
 
     @Override
-    public void displayReferentSearch() {}
+    public void displayReferentSearch() {
+        updateContainer(new ReadRefPanel());
+    }
+
+    private void updateContainer(JPanel panel) {
+        mainContainer.remove(currentPanel);
+        currentPanel = panel;
+        mainContainer.add(currentPanel);
+        mainContainer.revalidate();
+        mainContainer.repaint();
+    }
 }
