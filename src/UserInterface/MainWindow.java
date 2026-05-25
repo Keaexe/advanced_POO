@@ -22,6 +22,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     public MainWindow(IController controller) {
         super("Advanced_POO");
         mainContainer = this.getContentPane();
+        this.controller = controller;
 
         final int WINDOW_WIDTH = 1500;
         final int WINDOW_HEIGHT = 1000;
