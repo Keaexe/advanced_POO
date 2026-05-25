@@ -1,11 +1,16 @@
 package Controller;
 
-import Interfaces.IController;
-import Interfaces.IUserInterface;
+import Exceptions.DataAccessException;
+import Interfaces.*;
+import Model.SchoolOfThought;
+import java.util.ArrayList;
 
 public class Controller implements IController {
 
     private IUserInterface ui;
+    private IBusinessLogic bL;
+
+    public Controller() {}
 
     public void exit() {
         System.exit(0);
@@ -34,5 +39,26 @@ public class Controller implements IController {
     @Override
     public void displayReferentSearch() {
         ui.displayReferentSearch();
+    }
+
+    @Override
+    public void displayHome() {
+        ui.displayHome();
+    }
+
+    @Override
+    public void setUI(IUserInterface ui) {
+        this.ui = ui;
+    }
+
+    @Override
+    public void setBusinessLogic(IBusinessLogic bL) {
+        this.bL = bL;
+    }
+
+    @Override
+    public ArrayList<SchoolOfThought> getAllSchools()
+        throws DataAccessException {
+        return bL.getAllSchools();
     }
 }

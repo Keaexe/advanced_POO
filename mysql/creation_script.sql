@@ -65,7 +65,7 @@ CREATE TABLE client (
 
 CREATE TABLE school_of_thought (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

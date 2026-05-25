@@ -1,6 +1,8 @@
 package UserInterface;
 
-import Interfaces.IUserInterface;
+import Exceptions.DataAccessException;
+import Exceptions.UIException;
+import Interfaces.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -12,12 +14,16 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     private JMenuBar menuBar;
     private JMenu systemMenu, modifications, search;
-    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
+    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, backHome;
     private Container mainContainer;
-    private JPanel monkPanel;
+    private JPanel currentPanel;
+    private IController controller;
+    private FloatingThread thread;
 
-    public MainWindow() {
+    public MainWindow(IController controller) {
         super("Advanced_POO");
+        mainContainer = this.getContentPane();
+        this.controller = controller;
 
         final int WINDOW_WIDTH = 1500;
         final int WINDOW_HEIGHT = 1000;
@@ -43,11 +49,19 @@ public class MainWindow extends JFrame implements IUserInterface {
         search.setMnemonic('F');
         menuBar.add(search);
 
+        backHome = new JMenuItem("Home");
+        backHome.setAccelerator(
+            KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK)
+        );
+        HomeListener backHomeListener = new HomeListener(controller);
+        backHome.addActionListener(backHomeListener);
+        systemMenu.add(backHome);
+
         exit = new JMenuItem("Exit");
         exit.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK)
         );
-        ExitListener exitListener = new ExitListener();
+        ExitListener exitListener = new ExitListener(controller);
         exit.addActionListener(exitListener);
         systemMenu.add(exit);
 
@@ -55,7 +69,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentCr.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)
         );
-        CreateListener createListener = new CreateListener();
+        CreateListener createListener = new CreateListener(controller);
         referentCr.addActionListener(createListener);
         modifications.add(referentCr);
         modifications.addSeparator();
@@ -63,7 +77,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentUp.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK)
         );
-        UpdateListener updateListener = new UpdateListener();
+        UpdateListener updateListener = new UpdateListener(controller);
         referentUp.addActionListener(updateListener);
         modifications.add(referentUp);
         modifications.addSeparator();
@@ -80,68 +94,105 @@ public class MainWindow extends JFrame implements IUserInterface {
             KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK)
         );
         ReferentSearchListener referentSearchListener =
-            new ReferentSearchListener();
+            new ReferentSearchListener(controller);
         referentSearch.addActionListener(referentSearchListener);
         search.add(referentSearch);
         itemSearch = new JMenuItem("Items");
         itemSearch.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK)
         );
-        ItemSearchListener itemSearchListener = new ItemSearchListener();
+        ItemSearchListener itemSearchListener = new ItemSearchListener(
+            controller
+        );
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
-        monkPanel = new JPanel();
-        monkPanel.setLayout(null);
-        JLabel label = new JLabel();
-        final int MONK_WIDTH = 100;
-        try {
-            label.setIcon(
-                new ImageIcon(
-                    new ImageIcon("resources/monk.png")
-                        .getImage()
-                        .getScaledInstance(
-                            MONK_WIDTH,
-                            MONK_WIDTH + 10,
-                            Image.SCALE_SMOOTH
-                        )
-                )
-            );
-            label.setBounds(
-                WINDOW_WIDTH - MONK_WIDTH,
-                WINDOW_HEIGHT - (int) (MONK_WIDTH * 1.65),
-                MONK_WIDTH,
-                MONK_WIDTH + 10
-            );
-            monkPanel.add(label);
-        } catch (NullPointerException exception) {
-            System.out.println("Image could not be loaded"); // TO MODIFY
-            monkPanel = null;
-        }
-
-        mainContainer = this.getContentPane();
-        mainContainer.add(menuBar);
-        if (monkPanel != null) {
-            mainContainer.add(monkPanel);
-            var thread = new FloatingThread(monkPanel);
-            thread.start();
-        }
-
+        displayHome();
         setVisible(true);
     }
 
     @Override
-    public void displayCreateReferent() {}
+    public void displayCreateReferent() {
+        try {
+            updateContainer(new CreateRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch schools\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     @Override
-    public void displayUpdateReferent() {}
+    public void displayUpdateReferent() {
+        updateContainer(new UpdateRefPanel());
+    }
 
     @Override
-    public void displayDeleteReferent() {}
+    public void displayDeleteReferent() {
+        updateContainer(new DeleteRefPanel());
+    }
 
     @Override
-    public void displayItemSearch() {}
+    public void displayItemSearch() {
+        updateContainer(new ReadItemPanel());
+    }
 
     @Override
-    public void displayReferentSearch() {}
+    public void displayReferentSearch() {
+        updateContainer(new ReadRefPanel());
+    }
+
+    @Override
+    public void displayHome() {
+        try {
+            HomePanel homePanel = new HomePanel();
+            updateContainer(homePanel);
+            SwingUtilities.invokeLater(() -> {
+                thread = new FloatingThread(homePanel.getMonk());
+                thread.start();
+            });
+        } catch (UIException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                e.getMessage() + "\n(" + e.getOriginalMessage() + ")",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } catch (IllegalThreadStateException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Another instance seems to be running, please close it" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private void updateContainer(JPanel panel) {
+        if (currentPanel != null) {
+            mainContainer.remove(currentPanel);
+        }
+        if (thread != null && thread.isAlive()) {
+            thread.interrupt();
+        }
+        currentPanel = panel;
+        try {
+            mainContainer.add(currentPanel);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel because it's null\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        mainContainer.revalidate();
+        mainContainer.repaint();
+    }
 }

@@ -6,4 +6,5 @@ public interface IUserInterface {
     void displayDeleteReferent();
     void displayItemSearch();
     void displayReferentSearch();
+    void displayHome();
 }

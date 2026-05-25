@@ -1,28 +1,32 @@
 package UserInterface;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class FloatingThread extends Thread {
 
-    JPanel monkPanel;
+    JLabel monk;
 
-    public FloatingThread(JPanel monkPanel) {
-        this.monkPanel = monkPanel;
+    public FloatingThread(JLabel monk) {
+        this.monk = monk;
     }
 
     public void run() {
         Integer y = 1;
         Integer i = 0;
         while (true) {
-            monkPanel.setLocation(monkPanel.getX(), monkPanel.getY() - y);
+            if (Thread.currentThread().isInterrupted()) {
+                break;
+            }
+            monk.setLocation(monk.getX(), monk.getY() - y);
             if (i == 30) {
                 i = 0;
                 y *= -1;
             }
             try {
-                sleep(60);
+                sleep(100);
             } catch (InterruptedException e) {
-                System.out.println("Monk animation has encountered an error"); // TO MODIFY
                 break;
             }
             i++;

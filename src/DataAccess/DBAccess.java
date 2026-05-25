@@ -4,6 +4,7 @@ import Exceptions.DataAccessException;
 import Interfaces.IDataAccess;
 import Model.Item;
 import Model.Referent;
+import Model.SchoolOfThought;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -110,6 +111,31 @@ public class DBAccess implements IDataAccess {
             }
 
             sqlStat.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<SchoolOfThought> getAllSchools()
+        throws DataAccessException {
+        try {
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(
+                    "select * from school_of_thought;"
+                );
+            ResultSet data = sqlStat.executeQuery();
+            var schools = new ArrayList<SchoolOfThought>();
+            while (data.next()) {
+                schools.addLast(
+                        new SchoolOfThought(
+                                data.getInt("id"),
+                                data.getString("name"),
+                                data.getString("description")
+                        )
+                );
+            }
+            return schools;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }

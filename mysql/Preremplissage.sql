@@ -3,6 +3,7 @@ USE POO_ADVANCED;
 -- 1. Lookups & Independent tables
 INSERT INTO category (name, description) VALUES ('Books', 'Philosophical and educational literature');
 INSERT INTO school_of_thought (id, name, description) VALUES (1, 'Stoicism', 'Philosophy of personal ethics informed by logic');
+INSERT INTO school_of_thought (name, description) VALUES ('Chillisme', 'Chill man, on est cool');
 INSERT INTO coupon (code, discount_percentage) VALUES ('WELCOME10', 10.00);
 INSERT INTO country (name, is_supported) VALUES ('Belgium', TRUE);
 
