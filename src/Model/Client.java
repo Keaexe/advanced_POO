@@ -1,6 +1,6 @@
 package Model;
 
-import Utils.StringUtils;
+import Utils.ValidationUtils;
 
 public class Client {
     private Integer id, deliveryAddressId;
@@ -19,7 +19,7 @@ public class Client {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = StringUtils.requireNotBlank(firstName,"firstname");
+        this.firstName = ValidationUtils.validateString(firstName,"firstname", true ,50);
     }
 
     public String getLastName() {
@@ -27,6 +27,18 @@ public class Client {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = StringUtils.requireNotBlank(lastName, "lastName");
+        this.lastName = ValidationUtils.validateString(lastName, "lastName", true, 100);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getDeliveryAddressId() {
+        return deliveryAddressId;
+    }
+
+    public void setDeliveryAddressId(Integer deliveryAddressId) {
+        this.deliveryAddressId = deliveryAddressId;
     }
 }
