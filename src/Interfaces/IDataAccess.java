@@ -11,4 +11,5 @@ public interface IDataAccess {
     Referent getReferentById(int id) throws DataAccessException;
     ArrayList<Referent> getAllReferent() throws DataAccessException;
     void addReferent(Referent referent) throws DataAccessException;
+    ArrayList<SchoolOfThought> getAllSchools() throws DataAccessException;
 }

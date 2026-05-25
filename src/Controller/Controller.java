@@ -1,6 +1,9 @@
 package Controller;
 
+import Exceptions.DataAccessException;
 import Interfaces.*;
+import Model.SchoolOfThought;
+import java.util.ArrayList;
 
 public class Controller implements IController {
 
@@ -51,5 +54,14 @@ public class Controller implements IController {
     @Override
     public void setBusinessLogic(IBusinessLogic bL) {
         this.bL = bL;
+    }
+
+    @Override
+    public ArrayList<SchoolOfThought> getAllSchools()
+        throws DataAccessException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'getAllSchools'"
+        );
     }
 }

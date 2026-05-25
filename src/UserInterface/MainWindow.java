@@ -1,5 +1,6 @@
 package UserInterface;
 
+import Exceptions.DataAccessException;
 import Exceptions.UIException;
 import Interfaces.*;
 import java.awt.*;
@@ -112,7 +113,17 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     @Override
     public void displayCreateReferent() {
-        updateContainer(new CreateRefPanel());
+        try {
+            updateContainer(new CreateRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch schools\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override

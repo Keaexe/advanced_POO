@@ -1,9 +1,13 @@
 package UserInterface;
 
+import Exceptions.DataAccessException;
+import Interfaces.*;
+import Model.SchoolOfThought;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +20,7 @@ public class CreateRefPanel extends JPanel {
     private JTextField designation, firstName, lastName, birthDate, isAlive, website, nickname;
     private JComboBox<String> idSchoolOfThought;
 
-    public CreateRefPanel() {
+    public CreateRefPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
         title = new JLabel("Here is the place to add referents");
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -53,8 +57,12 @@ public class CreateRefPanel extends JPanel {
 
         idSchoolOfThoughtLabel = new JLabel("School of Thought ID ");
         fieldsPanel.add(idSchoolOfThoughtLabel);
-        String[] schools = { "test1", "test2", "test3" };
-        idSchoolOfThought = new JComboBox<String>(schools);
+        ArrayList<SchoolOfThought> schools = controller.getAllSchools();
+        var schoolsNames = new String[schools.size()];
+        for (int i = 0; i < schools.size(); i++) {
+            schoolsNames[i] = schools.get(i).getName();
+        }
+        idSchoolOfThought = new JComboBox<String>(schoolsNames);
         fieldsPanel.add(idSchoolOfThought);
 
         fieldsPanel.add(idSchoolOfThought);

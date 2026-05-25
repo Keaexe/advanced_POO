@@ -4,6 +4,7 @@ import Exceptions.DataAccessException;
 import Interfaces.IDataAccess;
 import Model.Item;
 import Model.Referent;
+import Model.SchoolOfThought;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -113,5 +114,14 @@ public class DBAccess implements IDataAccess {
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
+    }
+
+    @Override
+    public ArrayList<SchoolOfThought> getAllSchools()
+        throws DataAccessException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'getAllSchools'"
+        );
     }
 }
