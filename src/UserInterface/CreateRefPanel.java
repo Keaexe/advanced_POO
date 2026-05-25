@@ -4,6 +4,7 @@ import Exceptions.DataAccessException;
 import Interfaces.*;
 import Model.SchoolOfThought;
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -17,8 +18,9 @@ import javax.swing.SwingConstants;
 public class CreateRefPanel extends JPanel {
 
     private JLabel designationLabel, firstNameLabel, lastNameLabel, birthDateLabel, isAliveLabel, idSchoolOfThoughtLabel, websiteLabel, nicknameLabel, title;
-    private JTextField designation, firstName, lastName, birthDate, isAlive, website, nickname;
+    private JTextField designation, firstName, lastName, birthDate, website, nickname;
     private JComboBox<String> idSchoolOfThought;
+    private Checkbox isAlive;
 
     public CreateRefPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
@@ -50,9 +52,9 @@ public class CreateRefPanel extends JPanel {
         birthDate = new JTextField();
         fieldsPanel.add(birthDate);
 
-        isAliveLabel = new JLabel("Is Alive ");
+        isAliveLabel = new JLabel("Is dead");
         fieldsPanel.add(isAliveLabel);
-        isAlive = new JTextField();
+        isAlive = new Checkbox();
         fieldsPanel.add(isAlive);
 
         idSchoolOfThoughtLabel = new JLabel("School of Thought ID ");
