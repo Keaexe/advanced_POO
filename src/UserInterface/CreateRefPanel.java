@@ -9,18 +9,23 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 public class CreateRefPanel extends JPanel {
 
     private JLabel designationLabel, firstNameLabel, lastNameLabel, birthDateLabel, isAliveLabel, idSchoolOfThoughtLabel, websiteLabel, nicknameLabel, title;
-    private JTextField designation, firstName, lastName, birthDate, website, nickname;
+    private JTextField designation, firstName, lastName, website, nickname;
     private JComboBox<String> idSchoolOfThought;
     private Checkbox isAlive;
+    private JSpinner birthDate;
 
     public CreateRefPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
@@ -49,7 +54,20 @@ public class CreateRefPanel extends JPanel {
 
         birthDateLabel = new JLabel("Birth Date ");
         fieldsPanel.add(birthDateLabel);
-        birthDate = new JTextField();
+        Date today = new Date();
+        SpinnerDateModel dateModel = new SpinnerDateModel(
+            today,
+            today,
+            null,
+            Calendar.YEAR
+        );
+        birthDate = new JSpinner(dateModel);
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(
+            birthDate,
+            "yyyy-MM-dd"
+        );
+        birthDate.setEditor(dateEditor);
+
         fieldsPanel.add(birthDate);
 
         isAliveLabel = new JLabel("Is dead");
@@ -67,7 +85,6 @@ public class CreateRefPanel extends JPanel {
         idSchoolOfThought = new JComboBox<String>(schoolsNames);
         fieldsPanel.add(idSchoolOfThought);
 
-        fieldsPanel.add(idSchoolOfThought);
         websiteLabel = new JLabel("Website ");
         fieldsPanel.add(websiteLabel);
         website = new JTextField();
