@@ -1,7 +1,7 @@
 package UserInterface;
 
 import Exceptions.UIException;
-import Interfaces.IUserInterface;
+import Interfaces.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -16,8 +16,9 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, backHome;
     private Container mainContainer;
     private JPanel currentPanel;
+    private IController controller;
 
-    public MainWindow() {
+    public MainWindow(IController controller) {
         super("Advanced_POO");
         mainContainer = this.getContentPane();
 
@@ -49,7 +50,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         backHome.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK)
         );
-        HomeListener backHomeListener = new HomeListener();
+        HomeListener backHomeListener = new HomeListener(controller);
         backHome.addActionListener(backHomeListener);
         systemMenu.add(backHome);
 
@@ -57,7 +58,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         exit.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK)
         );
-        ExitListener exitListener = new ExitListener();
+        ExitListener exitListener = new ExitListener(controller);
         exit.addActionListener(exitListener);
         systemMenu.add(exit);
 
@@ -65,7 +66,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentCr.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)
         );
-        CreateListener createListener = new CreateListener();
+        CreateListener createListener = new CreateListener(controller);
         referentCr.addActionListener(createListener);
         modifications.add(referentCr);
         modifications.addSeparator();
@@ -73,7 +74,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentUp.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK)
         );
-        UpdateListener updateListener = new UpdateListener();
+        UpdateListener updateListener = new UpdateListener(controller);
         referentUp.addActionListener(updateListener);
         modifications.add(referentUp);
         modifications.addSeparator();
@@ -90,14 +91,16 @@ public class MainWindow extends JFrame implements IUserInterface {
             KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK)
         );
         ReferentSearchListener referentSearchListener =
-            new ReferentSearchListener();
+            new ReferentSearchListener(controller);
         referentSearch.addActionListener(referentSearchListener);
         search.add(referentSearch);
         itemSearch = new JMenuItem("Items");
         itemSearch.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK)
         );
-        ItemSearchListener itemSearchListener = new ItemSearchListener();
+        ItemSearchListener itemSearchListener = new ItemSearchListener(
+            controller
+        );
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 

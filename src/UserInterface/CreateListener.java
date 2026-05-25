@@ -9,7 +9,7 @@ public class CreateListener implements ActionListener {
 
     private IController controller;
 
-    public CreateListener() {
+    public CreateListener(IController controller) {
         controller = new Controller();
     }
 

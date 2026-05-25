@@ -8,4 +8,6 @@ public interface IController {
     void displayItemSearch();
     void displayReferentSearch();
     void displayHome();
+    void setUI(IUserInterface ui);
+    void setBusinessLogic(IBusinessLogic bL);
 }

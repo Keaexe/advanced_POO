@@ -1,6 +1,5 @@
 package UserInterface;
 
-import Controller.Controller;
 import Interfaces.IController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +8,8 @@ public class UpdateListener implements ActionListener {
 
     private IController controller;
 
-    public UpdateListener() {
-        controller = new Controller();
+    public UpdateListener(IController controller) {
+        this.controller = controller;
     }
 
     @Override
