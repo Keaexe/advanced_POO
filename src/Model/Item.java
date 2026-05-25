@@ -1,5 +1,7 @@
 package Model;
 
+import Utils.ValidationUtils;
+
 import java.awt.*;
 
 public class Item {
@@ -10,15 +12,91 @@ public class Item {
     private Integer leftInStock;
     private String description;
     private Image image;
+    private String categoryName;
 
     public Item(Integer id, String name, Double priceExVAT, Double VATPercentage, Integer leftInStock,
-                String description, Image image) {
+                String description, Image image, String categoryName) {
         this.id = id;
-        this.name = name;
-        this.priceExVAT = priceExVAT;
-        this.VATPercentage = VATPercentage;
-        this.leftInStock = leftInStock;
-        this.description = description;
+        setName(name);
+        setVATPercentage(VATPercentage);
+        setPriceExVAT(priceExVAT);
+        setLeftInStock(leftInStock);
+        setDescription(description);
         this.image = image;
+        setCategoryName(categoryName);
+    }
+
+    public Item( String name, Double priceExVAT, Double VATPercentage, Integer leftInStock,
+                String description, Image image, String categoryName) {
+        this(null,name, priceExVAT, VATPercentage, leftInStock, description, image, categoryName);
+    }
+
+
+
+    public Double getFullPrice(){
+        Double coefficient = 1 + (this.VATPercentage/100);
+
+        return this.priceExVAT * coefficient;
+    }
+
+    public Double getPriceExVAT(){
+        return this.priceExVAT;
+    }
+
+    public void setPriceExVAT(Double priceExVAT){
+        this.priceExVAT = ValidationUtils.validateDouble(priceExVAT, "Price without VAT", true, 0.00, Double.MAX_VALUE);
+    }
+
+    public Double getVATPercentage(){
+        return this.VATPercentage;
+    }
+
+    public void setVATPercentage(Double VATPercentage){
+        this.VATPercentage = ValidationUtils.validateDouble(VATPercentage, "VAT percentage", true, 0.00, 100.00);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = ValidationUtils.validateString(name, "Name", true, 255);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = ValidationUtils.validateString(description,"Description", true);
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = ValidationUtils.validateString(categoryName, "Category's name", true, 255);
+
+    }
+
+    public Integer getLeftInStock() {
+        return leftInStock;
+    }
+
+    public void setLeftInStock(Integer leftInStock) {
+        this.leftInStock = ValidationUtils.validateInteger(leftInStock,"'Left in stock'", true, 0, Integer.MAX_VALUE);
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
