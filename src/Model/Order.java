@@ -8,6 +8,10 @@ public class Order {
     private LocalDate creationTime;
 
 
+    public Order(Integer employeeId, Integer clientId, LocalDate creationTime) {
+        this(null, employeeId, clientId, creationTime);
+    }
+
     public Order(Integer id, Integer employeeId, Integer clientId, LocalDate creationTime) {
         this.id = id;
         this.employeeId = employeeId;

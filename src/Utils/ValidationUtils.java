@@ -2,7 +2,10 @@ package Utils;
 
 import Exceptions.ValidationException;
 
+import java.time.LocalDate;
+
 public final class ValidationUtils {
+    static private final Integer MIN_AGE_REQUIRED = 18;
 
     /**
      * Validate and clean a string according to the arguments.
@@ -62,6 +65,36 @@ public final class ValidationUtils {
 
         if (max != null && value.compareTo(max) > 0) {
             throw new ValidationException(fieldName);
+        }
+
+        return value;
+    }
+
+    public static LocalDate validateDate(LocalDate value, String fieldName, boolean isRequired,boolean checkMinimumAge, boolean allowPast, boolean allowFuture) {
+
+        if (value == null) {
+            if (isRequired) {
+                throw new ValidationException(fieldName + " is required.");
+            }
+            return null;
+        }
+
+        LocalDate today = LocalDate.now();
+
+        if(checkMinimumAge){
+            LocalDate latestAllowedBirthDate = today.minusYears(MIN_AGE_REQUIRED);
+
+            if (value.isAfter(latestAllowedBirthDate)) {
+                throw new ValidationException("You must be at least " + MIN_AGE_REQUIRED + " years old.");
+            }
+        } else{
+            if (!allowPast && value.isBefore(today)) {
+                throw new ValidationException(fieldName + " cannot be in the past.");
+            }
+
+            if (!allowFuture && value.isAfter(today)) {
+                throw new ValidationException(fieldName + " cannot be in the future.");
+            }
         }
 
         return value;
