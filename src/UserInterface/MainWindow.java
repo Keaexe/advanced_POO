@@ -1,5 +1,6 @@
 package UserInterface;
 
+import Exceptions.UIException;
 import Interfaces.IUserInterface;
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -14,7 +15,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenu systemMenu, modifications, search;
     private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
     private Container mainContainer;
-    private JPanel monkPanel;
+    private JPanel homePanel;
 
     public MainWindow() {
         super("Advanced_POO");
@@ -91,42 +92,32 @@ public class MainWindow extends JFrame implements IUserInterface {
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
-        monkPanel = new JPanel();
-        monkPanel.setLayout(null);
-        JLabel label = new JLabel();
-        final int MONK_WIDTH = 100;
         try {
-            label.setIcon(
-                new ImageIcon(
-                    new ImageIcon("resources/monk.png")
-                        .getImage()
-                        .getScaledInstance(
-                            MONK_WIDTH,
-                            MONK_WIDTH + 10,
-                            Image.SCALE_SMOOTH
-                        )
-                )
+            this.homePanel = new HomePanel();
+        } catch (UIException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                e.getMessage() + "\n(" + e.getOriginalMessage() + ")",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
             );
-            label.setBounds(
-                WINDOW_WIDTH - MONK_WIDTH,
-                WINDOW_HEIGHT - (int) (MONK_WIDTH * 1.65),
-                MONK_WIDTH,
-                MONK_WIDTH + 10
-            );
-            monkPanel.add(label);
-        } catch (NullPointerException exception) {
-            System.out.println("Image could not be loaded"); // TO MODIFY
-            monkPanel = null;
         }
 
         mainContainer = this.getContentPane();
         mainContainer.add(menuBar);
-        if (monkPanel != null) {
-            mainContainer.add(monkPanel);
-            var thread = new FloatingThread(monkPanel);
+        mainContainer.add(homePanel);
+        var thread = new FloatingThread(homePanel);
+        try {
             thread.start();
+        } catch (IllegalThreadStateException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Another instance seems to be running, please close it" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
-
         setVisible(true);
     }
 
