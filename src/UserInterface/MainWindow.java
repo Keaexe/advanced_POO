@@ -15,7 +15,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenu systemMenu, modifications, search;
     private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
     private Container mainContainer;
-    private JPanel homePanel;
+    private HomePanel homePanel;
 
     public MainWindow() {
         super("Advanced_POO");
@@ -106,7 +106,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         mainContainer = this.getContentPane();
         mainContainer.add(menuBar);
         mainContainer.add(homePanel);
-        var thread = new FloatingThread(homePanel);
+        var thread = new FloatingThread(homePanel.getMonk());
         try {
             thread.start();
         } catch (IllegalThreadStateException e) {

@@ -29,6 +29,7 @@ public class HomePanel extends JPanel {
             welcomeMessage.setText(
                 "Welcome to the world where the magic happens"
             );
+            welcomeMessage.setFont(new Font(Font.SERIF, Font.ITALIC, 32));
             monk.setHorizontalAlignment(SwingConstants.RIGHT);
             welcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
             this.add(monk, BorderLayout.SOUTH);
@@ -39,5 +40,9 @@ public class HomePanel extends JPanel {
                 exception.getMessage()
             );
         }
+    }
+
+    public JLabel getMonk() {
+        return monk;
     }
 }
