@@ -1,7 +1,7 @@
 package UserInterface;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 public class FloatingThread extends Thread {
 
@@ -23,7 +23,12 @@ public class FloatingThread extends Thread {
             try {
                 sleep(60);
             } catch (InterruptedException e) {
-                System.out.println("Monk animation has encountered an error"); // TO MODIFY
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Animation has been interrupted\n(" + e.getMessage() + ")",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
                 break;
             }
             i++;
