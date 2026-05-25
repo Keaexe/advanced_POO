@@ -7,4 +7,5 @@ public interface IController {
     void displayDeleteReferent();
     void displayItemSearch();
     void displayReferentSearch();
+    void displayHome();
 }

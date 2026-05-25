@@ -35,4 +35,9 @@ public class Controller implements IController {
     public void displayReferentSearch() {
         ui.displayReferentSearch();
     }
+
+    @Override
+    public void displayHome() {
+        ui.displayHome();
+    }
 }

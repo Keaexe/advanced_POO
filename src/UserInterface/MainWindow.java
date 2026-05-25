@@ -13,12 +13,13 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     private JMenuBar menuBar;
     private JMenu systemMenu, modifications, search;
-    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch;
+    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, backHome;
     private Container mainContainer;
     private JPanel currentPanel;
 
     public MainWindow() {
         super("Advanced_POO");
+        mainContainer = this.getContentPane();
 
         final int WINDOW_WIDTH = 1500;
         final int WINDOW_HEIGHT = 1000;
@@ -43,6 +44,14 @@ public class MainWindow extends JFrame implements IUserInterface {
         search = new JMenu("Search");
         search.setMnemonic('F');
         menuBar.add(search);
+
+        backHome = new JMenuItem("Home");
+        backHome.setAccelerator(
+            KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK)
+        );
+        HomeListener backHomeListener = new HomeListener();
+        backHome.addActionListener(backHomeListener);
+        systemMenu.add(backHome);
 
         exit = new JMenuItem("Exit");
         exit.setAccelerator(
@@ -92,28 +101,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
-        mainContainer = this.getContentPane();
-        try {
-            HomePanel homePanel = new HomePanel();
-            mainContainer.add(homePanel);
-            var thread = new FloatingThread(homePanel.getMonk());
-            thread.start();
-        } catch (UIException e) {
-            JOptionPane.showMessageDialog(
-                this,
-                e.getMessage() + "\n(" + e.getOriginalMessage() + ")",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-        } catch (IllegalThreadStateException e) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Another instance seems to be running, please close it" +
-                    e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
+        displayHome();
         setVisible(true);
     }
 
@@ -142,10 +130,47 @@ public class MainWindow extends JFrame implements IUserInterface {
         updateContainer(new ReadRefPanel());
     }
 
+    @Override
+    public void displayHome() {
+        try {
+            HomePanel homePanel = new HomePanel();
+            updateContainer(homePanel);
+            var thread = new FloatingThread(homePanel.getMonk());
+            thread.start();
+        } catch (UIException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                e.getMessage() + "\n(" + e.getOriginalMessage() + ")",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } catch (IllegalThreadStateException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Another instance seems to be running, please close it" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
     private void updateContainer(JPanel panel) {
-        mainContainer.remove(currentPanel);
+        if (currentPanel != null) {
+            mainContainer.remove(currentPanel);
+        }
         currentPanel = panel;
-        mainContainer.add(currentPanel);
+        try {
+            mainContainer.add(currentPanel);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel because it's null\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
         mainContainer.revalidate();
         mainContainer.repaint();
     }
