@@ -12,7 +12,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -141,6 +140,12 @@ public class CreateRefPanel extends JPanel {
                         website.getText(),
                         nickname.getText()
                     )
+                );
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Referent added successfully",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
                 );
                 controller.displayCreateReferent();
             } catch (ValidationException e) {
