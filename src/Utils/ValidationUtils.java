@@ -5,7 +5,7 @@ import Exceptions.ValidationException;
 import java.time.LocalDate;
 
 public final class ValidationUtils {
-    static private final Integer MIN_AGE_REQUIRED = 18;
+    static public final Integer MIN_AGE_REQUIRED = 18;
 
     /**
      * Validate and clean a string according to the arguments.
