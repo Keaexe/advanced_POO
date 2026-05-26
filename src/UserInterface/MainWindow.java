@@ -51,7 +51,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
         backHome = new JMenuItem("Home");
         backHome.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK)
         );
         HomeListener backHomeListener = new HomeListener(controller);
         backHome.addActionListener(backHomeListener);
@@ -59,7 +59,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
         exit = new JMenuItem("Exit");
         exit.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK)
         );
         ExitListener exitListener = new ExitListener(controller);
         exit.addActionListener(exitListener);
@@ -67,7 +67,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
         referentCr = new JMenuItem("Encode");
         referentCr.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK)
         );
         CreateListener createListener = new CreateListener(controller);
         referentCr.addActionListener(createListener);
@@ -75,7 +75,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         modifications.addSeparator();
         referentUp = new JMenuItem("Update");
         referentUp.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_DOWN_MASK)
         );
         UpdateListener updateListener = new UpdateListener(controller);
         referentUp.addActionListener(updateListener);
@@ -83,7 +83,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         modifications.addSeparator();
         referentDel = new JMenuItem("Delete");
         referentDel.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK)
         );
         DeleteListener deleteListener = new DeleteListener();
         referentDel.addActionListener(deleteListener);
@@ -91,7 +91,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
         referentSearch = new JMenuItem("Referents");
         referentSearch.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)
         );
         ReferentSearchListener referentSearchListener =
             new ReferentSearchListener(controller);
@@ -99,7 +99,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         search.add(referentSearch);
         itemSearch = new JMenuItem("Items");
         itemSearch.setAccelerator(
-            KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK)
+            KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK)
         );
         ItemSearchListener itemSearchListener = new ItemSearchListener(
             controller

@@ -1,8 +1,6 @@
 package UserInterface;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 public class FloatingThread extends Thread {
 
@@ -13,8 +11,8 @@ public class FloatingThread extends Thread {
     }
 
     public void run() {
-        Integer y = 1;
-        Integer i = 0;
+        int y = 1;
+        int i = 0;
         while (true) {
             if (Thread.currentThread().isInterrupted()) {
                 break;
