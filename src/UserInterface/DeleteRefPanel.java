@@ -48,17 +48,17 @@ public class DeleteRefPanel extends JPanel {
         boxLabel = new JLabel("Check this box to search by ID");
         searchGrid.add(boxLabel);
         searchBar = new JTextField();
-        searchBar.addActionListener(textListener);
-        searchGrid.add(searchBar);
-        byIdBox = new JCheckBox("Search id");
-        byIdBox.addItemListener(checkBoxListener);
-        checkBoxListener = new CheckBoxListener(searchLabel, boxLabel);
         textListener = new TextListener(
             controller,
             listModel,
             searchBar,
             checkBoxListener
         );
+        searchBar.addActionListener(textListener);
+        searchGrid.add(searchBar);
+        byIdBox = new JCheckBox("Search id");
+        checkBoxListener = new CheckBoxListener(searchLabel, boxLabel);
+        byIdBox.addItemListener(checkBoxListener);
         searchGrid.add(byIdBox);
 
         var referents = controller.getAllReferent();
