@@ -109,6 +109,7 @@ public class DeleteRefPanel extends JPanel {
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE
                 );
+                controller.displayDeleteReferent();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(
                     null,
