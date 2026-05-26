@@ -3,6 +3,7 @@ package Model;
 import Utils.ValidationUtils;
 
 public class Locality {
+
     private Integer id;
     private String countryName;
     private String name;
@@ -19,6 +20,10 @@ public class Locality {
 
     public Locality(String name, String zipCode, String countryName, boolean isSupported) {
         this(null,name,zipCode, countryName, isSupported);
+    }
+
+    public Integer getid() {
+        return id;
     }
 
     public String getName() {
