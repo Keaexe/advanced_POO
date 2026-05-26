@@ -14,7 +14,7 @@ class ReferentTest {
     private Referent referent;
 
     @BeforeEach
-    void setUp() throws ValidationException {
+    void setUp(){
         LocalDate initialBirthDate = LocalDate.now().minusYears(20);
 
         referent = new Referent(
@@ -29,7 +29,7 @@ class ReferentTest {
     }
 
     @Test
-    void setBirthDate() throws ValidationException {
+    void setBirthDate() {
         LocalDate validBirthDate = LocalDate.now().minusYears(30);
 
         referent.setBirthDate(validBirthDate);
@@ -38,7 +38,7 @@ class ReferentTest {
     }
 
     @Test
-    void setBirthDateWithMoreThanMinimumAge() throws ValidationException {
+    void setBirthDateWithMoreThanMinimumAge() {
         // Arrange
         LocalDate legalLimit = LocalDate.now().minusYears(ValidationUtils.MIN_AGE_REQUIRED);
         LocalDate birthDate = legalLimit.minusDays(1);
@@ -49,7 +49,7 @@ class ReferentTest {
     }
 
     @Test
-    void setBirthDateWithExactlyMinimumAge() throws ValidationException {
+    void setBirthDateWithExactlyMinimumAge() {
         LocalDate birthDate = LocalDate.now().minusYears(ValidationUtils.MIN_AGE_REQUIRED);
 
         referent.setBirthDate(birthDate);
@@ -58,7 +58,7 @@ class ReferentTest {
     }
 
     @Test
-    void setBirthDateWithLessThanMinimumAge() throws ValidationException{
+    void setBirthDateWithLessThanMinimumAge(){
         LocalDate legalLimit = LocalDate.now().minusYears(ValidationUtils.MIN_AGE_REQUIRED);
         LocalDate birthDate = legalLimit.plusDays(1);
 
@@ -66,7 +66,7 @@ class ReferentTest {
     }
 
     @Test
-    void setBirthDateWithNullDate() throws ValidationException{
+    void setBirthDateWithNullDate(){
         assertThrows(ValidationException.class, () -> referent.setBirthDate(null));
     }
 }
