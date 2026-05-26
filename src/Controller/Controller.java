@@ -78,4 +78,9 @@ public class Controller implements IController {
     public ArrayList<Referent> getAllReferent() throws DataAccessException {
         return bL.getAllReferent();
     }
+
+    @Override
+    public void deleteReferent(int id) throws DataAccessException {
+        bL.deleteReferent(id);
+    }
 }

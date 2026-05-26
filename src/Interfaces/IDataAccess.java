@@ -15,4 +15,5 @@ public interface IDataAccess {
         throws DataAccessException;
     public ArrayList<Referent> getReferentsByDesignation(String search)
         throws DataAccessException;
+    public void deleteReferent(int id) throws DataAccessException;
 }

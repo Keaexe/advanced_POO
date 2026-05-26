@@ -40,4 +40,9 @@ public class BusinessLogic implements IBusinessLogic {
     public ArrayList<Referent> getAllReferent() throws DataAccessException {
         return dataAccess.getAllReferent();
     }
+
+    @Override
+    public void deleteReferent(int id) throws DataAccessException {
+        dataAccess.deleteReferent(id);
+    }
 }

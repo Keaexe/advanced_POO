@@ -141,6 +141,19 @@ public class DBAccess implements IDataAccess {
         }
     }
 
+    public void deleteReferent(int id) throws DataAccessException {
+        try {
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(
+                    "DELETE FROM referent WHERE id=?;"
+                );
+            sqlStat.setInt(1, id);
+            sqlStat.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
     @Override
     public ArrayList<SchoolOfThought> getAllSchools()
         throws DataAccessException {

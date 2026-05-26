@@ -20,4 +20,5 @@ public interface IController {
         throws DataAccessException;
     public Referent getReferentById(int id) throws DataAccessException;
     public ArrayList<Referent> getAllReferent() throws DataAccessException;
+    public void deleteReferent(int id) throws DataAccessException;
 }
