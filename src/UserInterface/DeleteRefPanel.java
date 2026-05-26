@@ -11,9 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +24,6 @@ import javax.swing.SwingConstants;
 
 public class DeleteRefPanel extends JPanel {
 
-    private IController controller;
     private JLabel title, searchLabel, boxLabel;
     private JTextField searchBar;
     private JCheckBox byIdBox;

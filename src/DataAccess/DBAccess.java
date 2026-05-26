@@ -6,8 +6,6 @@ import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class DBAccess implements IDataAccess {

@@ -3,7 +3,6 @@ package UserInterface;
 import Exceptions.DataAccessException;
 import Interfaces.IController;
 import Model.Referent;
-import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
