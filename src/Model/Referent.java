@@ -129,6 +129,20 @@ public class Referent {
     }
 
     public void setWebsite(String website) throws ValidationException {
+        if (website != null){
+            int i = 0;
+            String https = "https://";
+            while (
+                    i < website.length() &&
+                            i < https.length() &&
+                            website.charAt(i) == https.charAt(i)
+            ) {
+                i++;
+            }
+            if (i != https.length()) {
+                throw new ValidationException("A website must begin by https://");
+            }
+        }
         this.website = ValidationUtils.validateString(
             website,
             "website",

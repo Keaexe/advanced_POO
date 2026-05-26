@@ -136,7 +136,7 @@ public class CreateRefPanel extends JPanel {
                             .atZone(java.time.ZoneId.systemDefault())
                             .toLocalDate(),
                         isAlive.getState(),
-                        schoolsOfThought.getSelectedIndex(),
+                        schoolsOfThought.getSelectedIndex() + 1,
                         website.getText(),
                         nickname.getText()
                     )
@@ -158,7 +158,7 @@ public class CreateRefPanel extends JPanel {
             } catch (DataAccessException e) {
                 JOptionPane.showMessageDialog(
                     null,
-                    "Could not create referent",
+                    "Could not create referent\n" + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
                 );
