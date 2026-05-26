@@ -20,7 +20,7 @@ CREATE TABLE employee (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE coupon (
-    code VARCHAR(20) PRIMARY KEY  (TRIM(code) <> ''),
+    code VARCHAR(20) PRIMARY KEY CHECK (TRIM(code) <> ''),
     discount_percentage DECIMAL(5, 2) NOT NULL CHECK (discount_percentage > 0 AND discount_percentage <= 100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -91,7 +91,7 @@ CREATE TABLE order_table (
     FOREIGN KEY (client_id) REFERENCES client(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE oder_line (
+CREATE TABLE order_line (
     order_id INT NOT NULL,
     item_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
@@ -103,7 +103,7 @@ CREATE TABLE oder_line (
 
 CREATE TABLE order_coupon (
     order_id INT NOT NULL,
-    coupon_code VARCHAR(20) NOT NULL (TRIM(coupon_code) <> ''),
+    coupon_code VARCHAR(20) NOT NULL CHECK (TRIM(coupon_code) <> ''),
     PRIMARY KEY (order_id, coupon_code),
     FOREIGN KEY (order_id) REFERENCES order_table(id),
     FOREIGN KEY (coupon_code) REFERENCES coupon(code)
