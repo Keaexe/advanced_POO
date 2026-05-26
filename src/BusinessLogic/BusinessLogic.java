@@ -2,6 +2,7 @@ package BusinessLogic;
 
 import Exceptions.DataAccessException;
 import Interfaces.*;
+import Model.Referent;
 import Model.SchoolOfThought;
 import java.util.ArrayList;
 
@@ -22,5 +23,26 @@ public class BusinessLogic implements IBusinessLogic {
 
     public void setDataAccess(IDataAccess dataAccess) {
         this.dataAccess = dataAccess;
+    }
+
+    @Override
+    public ArrayList<Referent> getReferentsByDesignation(String search)
+        throws DataAccessException {
+        return dataAccess.getReferentsByDesignation(search);
+    }
+
+    @Override
+    public Referent getReferentById(int id) throws DataAccessException {
+        return dataAccess.getReferentById(id);
+    }
+
+    @Override
+    public ArrayList<Referent> getAllReferent() throws DataAccessException {
+        return dataAccess.getAllReferent();
+    }
+
+    @Override
+    public void deleteReferent(int id) throws DataAccessException {
+        dataAccess.deleteReferent(id);
     }
 }

@@ -39,16 +39,43 @@ public class DBAccess implements IDataAccess {
                 data.getString("designation"),
                 data.getString("first_name"),
                 data.getString("last_name"),
-                LocalDate.ofInstant(
-                    data.getDate("birth_date").toInstant(),
-                    ZoneId.systemDefault()
-                ),
+                data.getDate("birth_date").toLocalDate(),
                 data.getBoolean("is_alive"),
-                data.getInt("school_of_thought"),
+                data.getInt("school_of_thought_id"),
                 data.getString("website"),
                 data.getString("nickname")
             );
             return referent;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    public ArrayList<Referent> getReferentsByDesignation(String search)
+        throws DataAccessException {
+        try {
+            String sqlString = "select * from referent where designation = ?";
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(sqlString);
+            sqlStat.setString(1, search);
+            ResultSet data = sqlStat.executeQuery();
+            var referents = new ArrayList<Referent>();
+            while (data.next()) {
+                referents.add(
+                    new Referent(
+                        data.getInt("id"),
+                        data.getString("designation"),
+                        data.getString("first_name"),
+                        data.getString("last_name"),
+                        data.getDate("birth_date").toLocalDate(),
+                        data.getBoolean("is_alive"),
+                        data.getInt("school_of_thought_id"),
+                        data.getString("website"),
+                        data.getString("nickname")
+                    )
+                );
+            }
+            return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
@@ -62,23 +89,21 @@ public class DBAccess implements IDataAccess {
                 );
             ResultSet data = sqlStat.executeQuery();
             var referents = new ArrayList<Referent>();
-            while (data.next()) {}
-            referents.addLast(
-                new Referent(
-                    data.getInt("id"),
-                    data.getString("designation"),
-                    data.getString("first_name"),
-                    data.getString("last_name"),
-                    LocalDate.ofInstant(
-                        data.getDate("birth_date").toInstant(),
-                        ZoneId.systemDefault()
-                    ),
-                    data.getBoolean("is_alive"),
-                    data.getInt("school_of_thought"),
-                    data.getString("website"),
-                    data.getString("nickname")
-                )
-            );
+            while (data.next()) {
+                referents.add(
+                    new Referent(
+                        data.getInt("id"),
+                        data.getString("designation"),
+                        data.getString("first_name"),
+                        data.getString("last_name"),
+                        data.getDate("birth_date").toLocalDate(),
+                        data.getBoolean("is_alive"),
+                        data.getInt("school_of_thought_id"),
+                        data.getString("website"),
+                        data.getString("nickname")
+                    )
+                );
+            }
             return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -116,6 +141,19 @@ public class DBAccess implements IDataAccess {
         }
     }
 
+    public void deleteReferent(int id) throws DataAccessException {
+        try {
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(
+                    "DELETE FROM referent WHERE id=?;"
+                );
+            sqlStat.setInt(1, id);
+            sqlStat.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
     @Override
     public ArrayList<SchoolOfThought> getAllSchools()
         throws DataAccessException {
@@ -128,11 +166,11 @@ public class DBAccess implements IDataAccess {
             var schools = new ArrayList<SchoolOfThought>();
             while (data.next()) {
                 schools.addLast(
-                        new SchoolOfThought(
-                                data.getInt("id"),
-                                data.getString("name"),
-                                data.getString("description")
-                        )
+                    new SchoolOfThought(
+                        data.getInt("id"),
+                        data.getString("name"),
+                        data.getString("description")
+                    )
                 );
             }
             return schools;

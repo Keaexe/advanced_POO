@@ -85,7 +85,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         referentDel.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK)
         );
-        DeleteListener deleteListener = new DeleteListener();
+        DeleteListener deleteListener = new DeleteListener(controller);
         referentDel.addActionListener(deleteListener);
         modifications.add(referentDel);
 
@@ -133,17 +133,47 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     @Override
     public void displayDeleteReferent() {
-        updateContainer(new DeleteRefPanel());
+        try {
+            updateContainer(new DeleteRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch referents\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
     public void displayItemSearch() {
-        updateContainer(new ReadItemPanel());
+        try {
+            updateContainer(new ReadRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch referents\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
     public void displayReferentSearch() {
-        updateContainer(new ReadRefPanel());
+        try {
+            updateContainer(new ReadRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch referents\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
