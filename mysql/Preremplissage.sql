@@ -32,5 +32,5 @@ VALUES (1, 'John', 'Smith', 1);
 INSERT INTO order_table (id, creation_time, employee_id, client_id)
 VALUES (1, NOW(), 1, 1);
 
-INSERT INTO oder_line (order_id, item_id, quantity, price_at_the_time)
+INSERT INTO order_line (order_id, item_id, quantity, price_at_the_time)
 VALUES (1, 1, 2, 15.00);
