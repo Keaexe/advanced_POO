@@ -15,7 +15,8 @@ public final class ValidationUtils {
      * @param maxLength - Optional: The maximum number of character according to database or other limitations.
      * @return the cleaned value, or null, or throw a ValidationException.
      */
-    public static String validateString(String value, String fieldName, boolean isRequired, Integer maxLength) {
+    public static String validateString(String value, String fieldName, boolean isRequired, Integer maxLength)
+            throws ValidationException {
         if (value == null || value.isBlank()) {
             if (isRequired) {
                 throw new ValidationException(fieldName + " is mandatory.");
@@ -26,20 +27,21 @@ public final class ValidationUtils {
         String cleanedValue = value.strip();
 
         if (maxLength != null && cleanedValue.length() > maxLength) {
-            throw new ValidationException(fieldName + " maiximum number of characters = " + maxLength + " caractères.");
+            throw new ValidationException(fieldName + " maximum number of characters = " + maxLength + " characters.");
         }
 
         return cleanedValue;
     }
 
-    public static String validateString(String value, String fieldName, boolean isRequired){
+    public static String validateString(String value, String fieldName, boolean isRequired) throws ValidationException{
         return validateString(value, fieldName, isRequired, Integer.MAX_VALUE );
     }
 
     /**
      * Same as validateString but for Integer
      */
-    public static Integer validateInteger(Integer value, String fieldName, boolean isRequired, Integer min, Integer max) {
+    public static Integer validateInteger(Integer value, String fieldName, boolean isRequired, Integer min, Integer max)
+            throws ValidationException {
         return validateNumber(value, fieldName, isRequired, min, max);
     }
 
@@ -47,11 +49,14 @@ public final class ValidationUtils {
     /**
      * Same as validateString but for Double
      */
-    public static Double validateDouble(Double value, String fieldName, boolean isRequired, Double min, Double max) {
+    public static Double validateDouble(Double value, String fieldName, boolean isRequired, Double min, Double max)
+            throws ValidationException {
         return validateNumber(value, fieldName, isRequired, min, max);
     }
 
-    private static <NumericType extends Number & Comparable<NumericType>> NumericType validateNumber(NumericType value, String fieldName, boolean isRequired, NumericType min, NumericType max) {
+    private static <NumericType extends Number & Comparable<NumericType>> NumericType validateNumber(
+            NumericType value, String fieldName, boolean isRequired, NumericType min, NumericType max)
+            throws ValidationException {
         if (value == null) {
             if (isRequired) {
                 throw new ValidationException(fieldName);
@@ -70,7 +75,8 @@ public final class ValidationUtils {
         return value;
     }
 
-    public static LocalDate validateDate(LocalDate value, String fieldName, boolean isRequired,boolean checkMinimumAge, boolean allowPast, boolean allowFuture) {
+    public static LocalDate validateDate(LocalDate value, String fieldName, boolean isRequired,boolean checkMinimumAge,
+                                         boolean allowPast, boolean allowFuture) throws ValidationException {
 
         if (value == null) {
             if (isRequired) {
