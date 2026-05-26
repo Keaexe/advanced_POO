@@ -83,4 +83,9 @@ public class Controller implements IController {
     public void deleteReferent(int id) throws DataAccessException {
         bL.deleteReferent(id);
     }
+
+    @Override
+    public void addReferent(Referent referent) throws DataAccessException {
+        bL.addReferent(referent);
+    }
 }

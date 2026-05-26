@@ -45,4 +45,9 @@ public class BusinessLogic implements IBusinessLogic {
     public void deleteReferent(int id) throws DataAccessException {
         dataAccess.deleteReferent(id);
     }
+
+    @Override
+    public void addReferent(Referent referent) throws DataAccessException {
+        dataAccess.addReferent(referent);
+    }
 }
