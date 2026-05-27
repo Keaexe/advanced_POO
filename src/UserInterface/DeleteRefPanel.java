@@ -11,9 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +24,6 @@ import javax.swing.SwingConstants;
 
 public class DeleteRefPanel extends JPanel {
 
-    private IController controller;
     private JLabel title, searchLabel, boxLabel;
     private JTextField searchBar;
     private JCheckBox byIdBox;
@@ -52,11 +48,16 @@ public class DeleteRefPanel extends JPanel {
         boxLabel = new JLabel("Check this box to search by ID");
         searchGrid.add(boxLabel);
         searchBar = new JTextField();
-        textListener = new TextListener(controller);
+        textListener = new TextListener(
+            controller,
+            listModel,
+            searchBar,
+            checkBoxListener
+        );
         searchBar.addActionListener(textListener);
         searchGrid.add(searchBar);
         byIdBox = new JCheckBox("Search id");
-        checkBoxListener = new CheckBoxListener();
+        checkBoxListener = new CheckBoxListener(searchLabel, boxLabel);
         byIdBox.addItemListener(checkBoxListener);
         searchGrid.add(byIdBox);
 
@@ -108,83 +109,11 @@ public class DeleteRefPanel extends JPanel {
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE
                 );
+                controller.displayDeleteReferent();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(
                     null,
                     "Could not delete the referent\n" + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            }
-        }
-    }
-
-    private class CheckBoxListener implements ItemListener {
-
-        private boolean isSelected;
-
-        public CheckBoxListener() {
-            this.isSelected = false;
-        }
-
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                searchLabel.setText("Search for referent by id");
-                boxLabel.setText("Uncheck this box to search by designation");
-                isSelected = true;
-            } else {
-                searchLabel.setText("Search for referent by designation");
-                boxLabel.setText("Check this box to search by ID");
-                isSelected = false;
-            }
-        }
-
-        public boolean isSelected() {
-            return isSelected;
-        }
-    }
-
-    private class TextListener implements ActionListener {
-
-        IController controller;
-
-        public TextListener(IController controller) {
-            this.controller = controller;
-        }
-
-        public void actionPerformed(ActionEvent event) {
-            try {
-                listModel.clear();
-                ArrayList<Referent> referents;
-                if (checkBoxListener.isSelected()) {
-                    referents = new ArrayList<>();
-                    referents.add(
-                        controller.getReferentById(
-                            Integer.parseInt(searchBar.getText())
-                        )
-                    );
-                } else {
-                    referents = controller.getReferentsByDesignation(
-                        searchBar.getText()
-                    );
-                }
-                for (Referent referent : referents) {
-                    listModel.addElement(
-                        Utils.Concatenation.concatenate(referent)
-                    );
-                }
-            } catch (DataAccessException e) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Could not perform search\n" + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Please enter an ID (numeric)\n" + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
                 );
