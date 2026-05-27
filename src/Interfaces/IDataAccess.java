@@ -16,4 +16,5 @@ public interface IDataAccess {
     public ArrayList<Referent> getReferentsByDesignation(String search)
         throws DataAccessException;
     public void deleteReferent(int id) throws DataAccessException;
+    public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
 }

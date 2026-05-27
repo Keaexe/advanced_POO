@@ -58,6 +58,24 @@ public class Referent {
         );
     }
 
+    public String toString() {
+        StringBuilder stringB = new StringBuilder();
+        stringB.append(id.toString());
+        stringB.append(") ");
+        stringB.append(designation);
+        stringB.append(" ");
+        stringB.append(firstName);
+        stringB.append(" ");
+        stringB.append(lastName);
+        stringB.append(", ");
+        stringB.append((nickname == null ? "" : nickname + ", "));
+        stringB.append("born the ");
+        stringB.append(birthDate.toString());
+        stringB.append((isAlive) ? ", alive" : ", dead");
+        stringB.append((website) == null ? "" : ", " + website);
+        return stringB.toString();
+    }
+
     public Integer getId() {
         return id;
     }
@@ -129,18 +147,20 @@ public class Referent {
     }
 
     public void setWebsite(String website) throws ValidationException {
-        if (website != null){
+        if (website != null) {
             int i = 0;
             String https = "https://";
             while (
-                    i < website.length() &&
-                            i < https.length() &&
-                            website.charAt(i) == https.charAt(i)
+                i < website.length() &&
+                i < https.length() &&
+                website.charAt(i) == https.charAt(i)
             ) {
                 i++;
             }
             if (i != https.length()) {
-                throw new ValidationException("A website must begin by https://");
+                throw new ValidationException(
+                    "A website must begin by https://"
+                );
             }
         }
         this.website = ValidationUtils.validateString(

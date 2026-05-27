@@ -3,7 +3,6 @@ package UserInterface;
 import Exceptions.DataAccessException;
 import Interfaces.IController;
 import Model.Referent;
-import Utils.Concatenation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -64,7 +63,13 @@ public class DeleteRefPanel extends JPanel {
         var referents = controller.getAllReferent();
         listModel = new DefaultListModel<>();
         for (Referent referent : referents) {
-            listModel.addElement(Concatenation.concatenate(referent));
+            listModel.addElement(
+                referent.toString() +
+                    " " +
+                    controller
+                        .getSchoolsByID(referent.getIdSchoolOfThought())
+                        .getName()
+            );
         }
         results = new JList<>(listModel);
         results.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -26,7 +26,7 @@ public class DBAccess implements IDataAccess {
 
     public Referent getReferentById(int id) throws DataAccessException {
         try {
-            String sqlString = "select * from referent where id = ?";
+            String sqlString = "SELECT * FROM referent WHERE id = ?";
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setInt(1, id);
@@ -52,7 +52,7 @@ public class DBAccess implements IDataAccess {
     public ArrayList<Referent> getReferentsByDesignation(String search)
         throws DataAccessException {
         try {
-            String sqlString = "select * from referent where designation = ?";
+            String sqlString = "SELECT * FROM referent WHERE designation = ?";
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setString(1, search);
@@ -83,7 +83,7 @@ public class DBAccess implements IDataAccess {
         try {
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(
-                    "select * from referent;"
+                    "SELECT * FROM referent;"
                 );
             ResultSet data = sqlStat.executeQuery();
             var referents = new ArrayList<Referent>();
@@ -158,12 +158,12 @@ public class DBAccess implements IDataAccess {
         try {
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(
-                    "select * from school_of_thought;"
+                    "SELECT * FROM school_of_thought;"
                 );
             ResultSet data = sqlStat.executeQuery();
             var schools = new ArrayList<SchoolOfThought>();
             while (data.next()) {
-                schools.addLast(
+                schools.add(
                     new SchoolOfThought(
                         data.getInt("id"),
                         data.getString("name"),
@@ -172,6 +172,28 @@ public class DBAccess implements IDataAccess {
                 );
             }
             return schools;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    @Override
+    public SchoolOfThought getSchoolsByID(int id) throws DataAccessException {
+        try {
+            PreparedStatement sqlStat =
+                SingletonConnection.getInstance().prepareStatement(
+                    "SELECT * FROM school_of_thought WHERE id=?;"
+                );
+            sqlStat.setInt(1, id);
+            ResultSet data = sqlStat.executeQuery();
+
+            data.next();
+            var school = new SchoolOfThought(
+                data.getInt("id"),
+                data.getString("name"),
+                data.getString("description")
+            );
+            return school;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }

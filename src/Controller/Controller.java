@@ -88,4 +88,9 @@ public class Controller implements IController {
     public void addReferent(Referent referent) throws DataAccessException {
         bL.addReferent(referent);
     }
+
+    @Override
+    public SchoolOfThought getSchoolsByID(int id) throws DataAccessException {
+        return bL.getSchoolsByID(id);
+    }
 }

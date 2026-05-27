@@ -46,7 +46,13 @@ public class TextListener implements ActionListener {
                 );
             }
             for (Referent referent : referents) {
-                listModel.addElement(Utils.Concatenation.concatenate(referent));
+                listModel.addElement(
+                    referent.toString() +
+                        " " +
+                        controller
+                            .getSchoolsByID(referent.getIdSchoolOfThought())
+                            .getName()
+                );
             }
         } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(
