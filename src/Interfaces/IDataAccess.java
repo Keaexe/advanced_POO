@@ -17,4 +17,5 @@ public interface IDataAccess {
         throws DataAccessException;
     public void deleteReferent(int id) throws DataAccessException;
     public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
+    public void updateReferent(Referent referent) throws DataAccessException;
 }

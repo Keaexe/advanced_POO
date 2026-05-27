@@ -55,4 +55,9 @@ public class BusinessLogic implements IBusinessLogic {
     public SchoolOfThought getSchoolsByID(int id) throws DataAccessException {
         return dataAccess.getSchoolsByID(id);
     }
+
+    @Override
+    public void updateReferent(Referent referent) throws DataAccessException {
+        dataAccess.updateReferent(referent);
+    }
 }

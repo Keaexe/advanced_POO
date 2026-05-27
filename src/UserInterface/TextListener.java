@@ -48,7 +48,7 @@ public class TextListener implements ActionListener {
             for (Referent referent : referents) {
                 listModel.addElement(
                     referent.toString() +
-                        " " +
+                        ", " +
                         controller
                             .getSchoolsByID(referent.getIdSchoolOfThought())
                             .getName()

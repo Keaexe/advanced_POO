@@ -37,6 +37,7 @@ public class ReadRefPanel extends JPanel {
     public ReadRefPanel(IController controller, String mode)
         throws DataAccessException {
         this.mode = mode;
+
         this.setLayout(new BorderLayout());
         title = new JLabel("Here is the place to " + mode + "referents");
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,7 +126,9 @@ public class ReadRefPanel extends JPanel {
                     );
                     controller.displayDeleteReferent();
                 } else {
-                    controller.displayUpdateReferent(Integer.parseInt(string));
+                    controller.displayUpdateReferent(
+                        controller.getReferentById(Integer.parseInt(string))
+                    );
                 }
             } catch (DataAccessException e) {
                 JOptionPane.showMessageDialog(

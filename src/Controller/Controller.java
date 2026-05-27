@@ -28,6 +28,11 @@ public class Controller implements IController {
     }
 
     @Override
+    public void displayUpdateReferent(Referent referent) {
+        ui.displayUpdateReferent(referent);
+    }
+
+    @Override
     public void displayDeleteReferent() {
         ui.displayDeleteReferent();
     }
@@ -92,5 +97,10 @@ public class Controller implements IController {
     @Override
     public SchoolOfThought getSchoolsByID(int id) throws DataAccessException {
         return bL.getSchoolsByID(id);
+    }
+
+    @Override
+    public void updateReferent(Referent referent) throws DataAccessException {
+        bL.updateReferent(referent);
     }
 }
