@@ -35,10 +35,19 @@ public class CreateRefPanel extends JPanel {
     private JButton button;
     private ButtonListener buttonListener;
     private ArrayList<SchoolOfThought> schools;
+    private String mode;
+    private Referent referent;
 
-    public CreateRefPanel(IController controller) throws DataAccessException {
+    public CreateRefPanel(
+        IController controller,
+        String mode,
+        Referent referent
+    ) throws DataAccessException {
+        this.mode = mode;
+        this.referent = referent;
+
         this.setLayout(new BorderLayout());
-        title = new JLabel("Here is the place to add referents");
+        title = new JLabel("Here is the place to " + mode + " referents");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.ITALIC, 28));
         this.add(title, BorderLayout.NORTH);
@@ -113,6 +122,29 @@ public class CreateRefPanel extends JPanel {
         wrapper.add(fieldsPanel);
         fieldsPanel.setPreferredSize(new java.awt.Dimension(500, 250));
         this.add(wrapper, BorderLayout.CENTER);
+
+        if (mode.compareTo("update") == 0) {
+            firstName.setText(referent.getFirstName());
+            lastName.setText(referent.getLastName());
+            designation.setText(referent.getDesignation());
+            birthDate.setValue(java.sql.Date.valueOf(referent.getBirthDate()));
+            isAlive.setState(referent.getIsAlive());
+            int i = 0;
+            while (schools.get(i).getId() != referent.getIdSchoolOfThought()) {
+                i++;
+            }
+            schoolsOfThought.setSelectedItem(schools.get(i).getName());
+            if (referent.getWebsite() != null) {
+                website.setText(referent.getWebsite());
+            }
+            if (referent.getNickname() != null) {
+                nickname.setText(referent.getNickname());
+            }
+        }
+    }
+
+    public CreateRefPanel(IController controller) throws DataAccessException {
+        this(controller, "create", null);
     }
 
     private class ButtonListener implements ActionListener {
@@ -126,28 +158,56 @@ public class CreateRefPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                controller.addReferent(
-                    new Referent(
-                        designation.getText(),
-                        firstName.getText(),
-                        lastName.getText(),
-                        ((java.util.Date) birthDate.getValue())
-                            .toInstant()
-                            .atZone(java.time.ZoneId.systemDefault())
-                            .toLocalDate(),
-                        isAlive.getState(),
-                        schoolsOfThought.getSelectedIndex() + 1,
-                        website.getText(),
-                        nickname.getText()
-                    )
-                );
+                if (mode.compareTo("create") == 0) {
+                    controller.addReferent(
+                        new Referent(
+                            designation.getText(),
+                            firstName.getText(),
+                            lastName.getText(),
+                            ((java.util.Date) birthDate.getValue())
+                                .toInstant()
+                                .atZone(java.time.ZoneId.systemDefault())
+                                .toLocalDate(),
+                            isAlive.getState(),
+                            schoolsOfThought.getSelectedIndex() + 1,
+                            website.getText().isEmpty()
+                                ? null
+                                : website.getText(),
+                            nickname.getText().isEmpty()
+                                ? null
+                                : nickname.getText()
+                        )
+                    );
+                    controller.displayCreateReferent();
+                } else {
+                    controller.updateReferent(
+                        new Referent(
+                            referent.getId(),
+                            designation.getText(),
+                            firstName.getText(),
+                            lastName.getText(),
+                            ((java.util.Date) birthDate.getValue())
+                                .toInstant()
+                                .atZone(java.time.ZoneId.systemDefault())
+                                .toLocalDate(),
+                            isAlive.getState(),
+                            schoolsOfThought.getSelectedIndex() + 1,
+                            website.getText().isEmpty()
+                                ? null
+                                : website.getText(),
+                            nickname.getText().isEmpty()
+                                ? null
+                                : nickname.getText()
+                        )
+                    );
+                    controller.displayUpdateReferent();
+                }
                 JOptionPane.showMessageDialog(
                     null,
-                    "Referent added successfully",
+                    "Referent " + mode + " successfully",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE
                 );
-                controller.displayCreateReferent();
             } catch (ValidationException e) {
                 JOptionPane.showMessageDialog(
                     null,
@@ -158,7 +218,7 @@ public class CreateRefPanel extends JPanel {
             } catch (DataAccessException e) {
                 JOptionPane.showMessageDialog(
                     null,
-                    "Could not create referent\n" + e.getMessage(),
+                    "Could not " + mode + " referent\n" + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
                 );

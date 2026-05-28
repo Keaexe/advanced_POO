@@ -8,6 +8,7 @@ public interface IController {
     public void exit();
     public void displayCreateReferent();
     public void displayUpdateReferent();
+    public void displayUpdateReferent(Referent referent);
     public void displayDeleteReferent();
     public void displayItemSearch();
     public void displayReferentSearch();
@@ -22,4 +23,6 @@ public interface IController {
     public ArrayList<Referent> getAllReferent() throws DataAccessException;
     public void deleteReferent(int id) throws DataAccessException;
     public void addReferent(Referent referent) throws DataAccessException;
+    public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
+    public void updateReferent(Referent referent) throws DataAccessException;
 }

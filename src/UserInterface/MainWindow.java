@@ -3,6 +3,7 @@ package UserInterface;
 import Exceptions.DataAccessException;
 import Exceptions.UIException;
 import Interfaces.*;
+import Model.Referent;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -128,7 +129,32 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     @Override
     public void displayUpdateReferent() {
-        updateContainer(new UpdateRefPanel());
+        try {
+            updateContainer(new UpdateRefPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch referents\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    @Override
+    public void displayUpdateReferent(Referent referent) {
+        try {
+            updateContainer(new UpdateRefPanel(controller, referent));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Could not display this panel, could not fetch schools\n" +
+                    e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
