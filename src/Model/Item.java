@@ -2,8 +2,6 @@ package Model;
 
 import Utils.ValidationUtils;
 
-import java.awt.*;
-
 public class Item {
     private Integer id;
     private String name;
@@ -11,24 +9,24 @@ public class Item {
     private Double VATPercentage;
     private Integer leftInStock;
     private String description;
-    private Image image;
+    private String imageURL;
     private String categoryName;
 
     public Item(Integer id, String name, Double priceExVAT, Double VATPercentage, Integer leftInStock,
-                String description, Image image, String categoryName) {
+                String description, String imageURL, String categoryName) {
         this.id = id;
         setName(name);
         setVATPercentage(VATPercentage);
         setPriceExVAT(priceExVAT);
         setLeftInStock(leftInStock);
         setDescription(description);
-        this.image = image;
+        this.imageURL = imageURL;
         setCategoryName(categoryName);
     }
 
-    public Item( String name, Double priceExVAT, Double VATPercentage, Integer leftInStock,
-                String description, Image image, String categoryName) {
-        this(null,name, priceExVAT, VATPercentage, leftInStock, description, image, categoryName);
+    public Item(String name, Double priceExVAT, Double VATPercentage, Integer leftInStock,
+                String description, String imageURL, String categoryName) {
+        this(null,name, priceExVAT, VATPercentage, leftInStock, description, imageURL, categoryName);
     }
 
 
@@ -88,12 +86,12 @@ public class Item {
         this.leftInStock = ValidationUtils.validateInteger(leftInStock,"'Left in stock'", true, 0, Integer.MAX_VALUE);
     }
 
-    public Image getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Integer getId() {
