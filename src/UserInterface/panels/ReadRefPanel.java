@@ -1,8 +1,11 @@
-package UserInterface;
+package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
-import Model.Referent;
+import Models.Referent;
+import UserInterface.listeners.CheckBoxListener;
+import UserInterface.listeners.TextListener;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -50,22 +53,27 @@ public class ReadRefPanel extends JPanel {
         searchGrid.add(searchLabel);
         boxLabel = new JLabel("Check this box to search by ID");
         searchGrid.add(boxLabel);
+
+        listModel = new DefaultListModel<>();
+
         searchBar = new JTextField();
-        textListener = new TextListener(
-            controller,
-            listModel,
-            searchBar,
-            checkBoxListener
-        );
-        searchBar.addActionListener(textListener);
-        searchGrid.add(searchBar);
+
         byIdBox = new JCheckBox("Search id");
         checkBoxListener = new CheckBoxListener(searchLabel, boxLabel);
         byIdBox.addItemListener(checkBoxListener);
+
+        textListener = new TextListener(
+                controller,
+                listModel,
+                searchBar,
+                checkBoxListener
+        );
+        searchBar.addActionListener(textListener);
+
+        searchGrid.add(searchBar);
         searchGrid.add(byIdBox);
 
         var referents = controller.getAllReferent();
-        listModel = new DefaultListModel<>();
         for (Referent referent : referents) {
             listModel.addElement(
                 referent.toString() +
@@ -110,6 +118,17 @@ public class ReadRefPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 String element = list.getSelectedValue();
+
+                if (element == null) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Please select a referent first.",
+                            "No referent selected",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    return;
+                }
+
                 String string = "";
                 int i = 0;
                 while (element.charAt(i) != ')') {
