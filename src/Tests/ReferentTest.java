@@ -1,7 +1,7 @@
 package Tests;
 
 import Exceptions.ValidationException;
-import Model.Referent;
+import Models.Referent;
 import Utils.ValidationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

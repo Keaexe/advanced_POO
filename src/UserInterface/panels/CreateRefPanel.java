@@ -1,10 +1,10 @@
-package UserInterface;
+package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Exceptions.ValidationException;
 import Interfaces.*;
-import Model.Referent;
-import Model.SchoolOfThought;
+import Models.Referent;
+import Models.SchoolOfThought;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Font;

@@ -1,7 +1,8 @@
-package UserInterface;
+package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
+import Models.Referent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,22 +11,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ReadOrderLinesPanel extends JPanel {
+public class ReadItemsPanel extends JPanel {
 
     private JLabel title;
-    private JLabel clientLabel;
+    private JLabel referentLabel;
 
-    private JComboBox<ComboBoxItem> clientComboBox;
+    private JComboBox<Referent> referentComboBox;
     private JButton searchButton;
 
     private JTable resultsTable;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
 
-    public ReadOrderLinesPanel(IController controller) throws DataAccessException {
+    public ReadItemsPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
 
-        title = new JLabel("Search order lines by client");
+        title = new JLabel("Search items by referent");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.ITALIC, 28));
         this.add(title, BorderLayout.NORTH);
@@ -34,12 +35,12 @@ public class ReadOrderLinesPanel extends JPanel {
 
         JPanel searchPanel = new JPanel(new FlowLayout());
 
-        clientLabel = new JLabel("Client : ");
-        searchPanel.add(clientLabel);
+        referentLabel = new JLabel("Referent : ");
+        searchPanel.add(referentLabel);
 
-        clientComboBox = new JComboBox<>();
-        fillClientComboBox(controller);
-        searchPanel.add(clientComboBox);
+        referentComboBox = new JComboBox<>();
+        fillReferentComboBox(controller);
+        searchPanel.add(referentComboBox);
 
         searchButton = new JButton("Search");
         searchButton.addActionListener(new SearchButtonListener(controller));
@@ -48,11 +49,11 @@ public class ReadOrderLinesPanel extends JPanel {
         wrapper.add(searchPanel, BorderLayout.NORTH);
 
         String[] columnNames = {
-                "Order id",
-                "Creation time",
-                "Item",
+                "Item name",
+                "Price ex VAT",
                 "Quantity",
-                "Price at the time"
+                "Price at the time",
+                "Category"
         };
 
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -65,21 +66,12 @@ public class ReadOrderLinesPanel extends JPanel {
         this.add(wrapper, BorderLayout.CENTER);
     }
 
-    private void fillClientComboBox(IController controller)
+    private void fillReferentComboBox(IController controller)
             throws DataAccessException {
-        ArrayList<Object[]> clients = controller.getAllClientsForCombo();
+        ArrayList<Referent> referents = controller.getAllReferent();
 
-        for (Object[] client : clients) {
-            Integer id = (Integer) client[0];
-            String firstName = (String) client[1];
-            String lastName = (String) client[2];
-
-            clientComboBox.addItem(
-                    new ComboBoxItem(
-                            id,
-                            firstName + " " + lastName + " (" + id + ")"
-                    )
-            );
+        for (Referent referent : referents) {
+            referentComboBox.addItem(referent);
         }
     }
 
@@ -102,28 +94,28 @@ public class ReadOrderLinesPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                ComboBoxItem selectedClient =
-                        (ComboBoxItem) clientComboBox.getSelectedItem();
+                Referent selectedReferent =
+                        (Referent) referentComboBox.getSelectedItem();
 
-                if (selectedClient == null) {
+                if (selectedReferent == null) {
                     JOptionPane.showMessageDialog(
                             null,
-                            "Please select a client.",
-                            "No client selected",
+                            "Please select a referent.",
+                            "No referent selected",
                             JOptionPane.WARNING_MESSAGE
                     );
                     return;
                 }
 
                 ArrayList<Object[]> rows =
-                        controller.getOrderLinesByClientId(selectedClient.getId());
+                        controller.getItemSearchResultsByReferentId(selectedReferent.getId());
 
                 fillTable(rows);
 
                 if (rows.isEmpty()) {
                     JOptionPane.showMessageDialog(
                             null,
-                            "No order line found for this client.",
+                            "No sold item found for this referent.",
                             "No result",
                             JOptionPane.INFORMATION_MESSAGE
                     );
@@ -131,31 +123,11 @@ public class ReadOrderLinesPanel extends JPanel {
             } catch (DataAccessException exception) {
                 JOptionPane.showMessageDialog(
                         null,
-                        "Could not search order lines.\n" + exception.getMessage(),
+                        "Could not search items.\n" + exception.getMessage(),
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
             }
-        }
-    }
-
-    private class ComboBoxItem {
-
-        private Integer id;
-        private String label;
-
-        public ComboBoxItem(Integer id, String label) {
-            this.id = id;
-            this.label = label;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        @Override
-        public String toString() {
-            return label;
         }
     }
 }

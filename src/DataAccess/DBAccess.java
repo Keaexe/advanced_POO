@@ -2,9 +2,9 @@ package DataAccess;
 
 import Exceptions.DataAccessException;
 import Interfaces.IDataAccess;
-import Model.Item;
-import Model.Referent;
-import Model.SchoolOfThought;
+import Models.Item;
+import Models.Referent;
+import Models.SchoolOfThought;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,11 +29,11 @@ public class DBAccess implements IDataAccess {
     public Referent getReferentById(int id) throws DataAccessException {
         try {
             String sqlString = "SELECT * FROM referent WHERE id = ?";
-            PreparedStatement sqlStat =
-                    SingletonConnection.getInstance().prepareStatement(sqlString);
+            PreparedStatement sqlStat = SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setInt(1, id);
             ResultSet data = sqlStat.executeQuery();
             data.next();
+
             var referent = new Referent(
                     data.getInt("id"),
                     data.getString("designation"),
@@ -45,20 +45,22 @@ public class DBAccess implements IDataAccess {
                     data.getString("website"),
                     data.getString("nickname")
             );
+
             return referent;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
 
-    public ArrayList<Referent> getReferentsByDesignation(String search)
-            throws DataAccessException {
+    public ArrayList<Referent> getReferentsByDesignation(String search) throws DataAccessException {
         try {
             String sqlString = "SELECT * FROM referent WHERE designation = ?";
+
             PreparedStatement sqlStat =
                     SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setString(1, search);
             ResultSet data = sqlStat.executeQuery();
+
             var referents = new ArrayList<Referent>();
             while (data.next()) {
                 referents.add(
@@ -75,6 +77,7 @@ public class DBAccess implements IDataAccess {
                         )
                 );
             }
+
             return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -88,6 +91,7 @@ public class DBAccess implements IDataAccess {
                             "SELECT * FROM referent;"
                     );
             ResultSet data = sqlStat.executeQuery();
+
             var referents = new ArrayList<Referent>();
             while (data.next()) {
                 referents.add(
@@ -104,6 +108,7 @@ public class DBAccess implements IDataAccess {
                         )
                 );
             }
+
             return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -115,9 +120,9 @@ public class DBAccess implements IDataAccess {
             String sqlString =
                     "INSERT INTO referent (designation, first_name, last_name, birth_date, is_alive," +
                             " school_of_thought_id, website, nickname) VALUES (?,?,?,?,?,?,?,?)";
+
             // Pas d'id car AUTO_INCREMENT
-            PreparedStatement sqlStat =
-                    SingletonConnection.getInstance().prepareStatement(sqlString);
+            PreparedStatement sqlStat = SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setString(1, referent.getDesignation());
             sqlStat.setString(2, referent.getFirstName());
             sqlStat.setString(3, referent.getLastName());
@@ -146,8 +151,8 @@ public class DBAccess implements IDataAccess {
             String sqlString =
                     "UPDATE referent SET designation = ?, first_name = ?, last_name = ?, birth_date = ?, is_alive = ?," +
                             " school_of_thought_id = ?, website = ?, nickname = ? WHERE id = ?";
-            PreparedStatement sqlStat =
-                    SingletonConnection.getInstance().prepareStatement(sqlString);
+
+            PreparedStatement sqlStat = SingletonConnection.getInstance().prepareStatement(sqlString);
             sqlStat.setString(1, referent.getDesignation());
             sqlStat.setString(2, referent.getFirstName());
             sqlStat.setString(3, referent.getLastName());
@@ -186,14 +191,14 @@ public class DBAccess implements IDataAccess {
     }
 
     @Override
-    public ArrayList<SchoolOfThought> getAllSchools()
-            throws DataAccessException {
+    public ArrayList<SchoolOfThought> getAllSchools() throws DataAccessException {
         try {
             PreparedStatement sqlStat =
                     SingletonConnection.getInstance().prepareStatement(
                             "SELECT * FROM school_of_thought;"
                     );
             ResultSet data = sqlStat.executeQuery();
+
             var schools = new ArrayList<SchoolOfThought>();
             while (data.next()) {
                 schools.add(
@@ -204,6 +209,7 @@ public class DBAccess implements IDataAccess {
                         )
                 );
             }
+
             return schools;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -221,11 +227,13 @@ public class DBAccess implements IDataAccess {
             ResultSet data = sqlStat.executeQuery();
 
             data.next();
+
             var school = new SchoolOfThought(
                     data.getInt("id"),
                     data.getString("name"),
                     data.getString("description")
             );
+
             return school;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -233,8 +241,7 @@ public class DBAccess implements IDataAccess {
     }
 
     @Override
-    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId)
-            throws DataAccessException {
+    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException {
         try {
             String sqlString =
                     "SELECT " +
@@ -250,8 +257,7 @@ public class DBAccess implements IDataAccess {
                             "WHERE ir.referent_id = ? " +
                             "ORDER BY i.name";
 
-            PreparedStatement sqlStat =
-                    SingletonConnection.getInstance().prepareStatement(sqlString);
+            PreparedStatement sqlStat = SingletonConnection.getInstance().prepareStatement(sqlString);
 
             sqlStat.setInt(1, referentId);
 
@@ -276,8 +282,7 @@ public class DBAccess implements IDataAccess {
     }
 
     @Override
-    public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
-            throws DataAccessException {
+    public ArrayList<Object[]> getOrderLinesByClientId(int clientId) throws DataAccessException {
         try {
             String sqlString =
                     "SELECT " +
@@ -347,8 +352,7 @@ public class DBAccess implements IDataAccess {
     }
 
     @Override
-    public ArrayList<String> getAllCountryNames()
-            throws DataAccessException {
+    public ArrayList<String> getAllCountryNames() throws DataAccessException {
         try {
             String sqlString =
                     "SELECT name " +
@@ -398,8 +402,7 @@ public class DBAccess implements IDataAccess {
                             "AND DATE(ot.creation_time) BETWEEN ? AND ? " +
                             "ORDER BY ot.creation_time";
 
-            PreparedStatement sqlStat =
-                    SingletonConnection.getInstance().prepareStatement(sqlString);
+            PreparedStatement sqlStat = SingletonConnection.getInstance().prepareStatement(sqlString);
 
             sqlStat.setString(1, countryName);
             sqlStat.setDate(2, java.sql.Date.valueOf(startDate));

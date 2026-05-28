@@ -3,7 +3,10 @@ package UserInterface;
 import Exceptions.DataAccessException;
 import Exceptions.UIException;
 import Interfaces.*;
-import Model.Referent;
+import Models.Referent;
+import UserInterface.listeners.*;
+import UserInterface.panels.*;
+
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -18,11 +21,14 @@ public class MainWindow extends JFrame implements IUserInterface {
     private JMenuItem ordersByCountrySearch, exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, orderLinesSearch, backHome;
     private Container mainContainer;
     private JPanel currentPanel;
+
     private IController controller;
+
     private FloatingThread thread;
 
     public MainWindow(IController controller) {
         super("Advanced_POO");
+
         mainContainer = this.getContentPane();
         this.controller = controller;
 
@@ -43,9 +49,11 @@ public class MainWindow extends JFrame implements IUserInterface {
         systemMenu = new JMenu("System");
         systemMenu.setMnemonic('S');
         menuBar.add(systemMenu);
+
         modifications = new JMenu("Modify referents");
         modifications.setMnemonic('M');
         menuBar.add(modifications);
+
         search = new JMenu("Search");
         search.setMnemonic('F');
         menuBar.add(search);
@@ -98,13 +106,12 @@ public class MainWindow extends JFrame implements IUserInterface {
             new ReferentSearchListener(controller);
         referentSearch.addActionListener(referentSearchListener);
         search.add(referentSearch);
+
         itemSearch = new JMenuItem("Items");
         itemSearch.setAccelerator(
             KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK)
         );
-        ItemSearchListener itemSearchListener = new ItemSearchListener(
-            controller
-        );
+        ItemSearchListener itemSearchListener = new ItemSearchListener(controller);
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
 
@@ -121,9 +128,7 @@ public class MainWindow extends JFrame implements IUserInterface {
         ordersByCountrySearch.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK)
         );
-
         OrdersByCountrySearchListener ordersByCountrySearchListener = new OrdersByCountrySearchListener(controller);
-
         ordersByCountrySearch.addActionListener(ordersByCountrySearchListener);
         search.add(ordersByCountrySearch);
 
@@ -194,7 +199,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     @Override
     public void displayItemSearch() {
         try {
-            updateContainer(new ReadItemPanel(controller));
+            updateContainer(new ReadItemsPanel(controller));
         } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(
                 this,
