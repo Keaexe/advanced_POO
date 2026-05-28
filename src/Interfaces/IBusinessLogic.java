@@ -15,4 +15,5 @@ public interface IBusinessLogic {
     public void addReferent(Referent referent) throws DataAccessException;
     public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
     public void updateReferent(Referent referent) throws DataAccessException;
+    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException;
 }
