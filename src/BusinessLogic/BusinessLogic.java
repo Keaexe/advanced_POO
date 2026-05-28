@@ -66,4 +66,16 @@ public class BusinessLogic implements IBusinessLogic {
     public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException{
         return dataAccess.getItemSearchResultsByReferentId(referentId);
     }
+
+    @Override
+    public ArrayList<Object[]> getAllClientsForCombo()
+            throws DataAccessException {
+        return dataAccess.getAllClientsForCombo();
+    }
+
+    @Override
+    public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
+            throws DataAccessException {
+        return dataAccess.getOrderLinesByClientId(clientId);
+    }
 }

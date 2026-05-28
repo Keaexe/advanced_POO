@@ -273,4 +273,75 @@ public class DBAccess implements IDataAccess {
             throw new DataAccessException(exception.getMessage());
         }
     }
+
+    @Override
+    public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
+            throws DataAccessException {
+        try {
+            String sqlString =
+                    "SELECT " +
+                            "ot.id AS order_id, " +
+                            "ot.creation_time AS creation_time, " +
+                            "i.name AS item_name, " +
+                            "ol.quantity AS quantity, " +
+                            "ol.price_at_the_time AS price_at_the_time " +
+                            "FROM order_table ot " +
+                            "JOIN order_line ol ON ot.id = ol.order_id " +
+                            "JOIN item i ON ol.item_id = i.id " +
+                            "WHERE ot.client_id = ? " +
+                            "ORDER BY ot.creation_time DESC, ot.id";
+
+            PreparedStatement sqlStat =
+                    SingletonConnection.getInstance().prepareStatement(sqlString);
+
+            sqlStat.setInt(1, clientId);
+
+            ResultSet data = sqlStat.executeQuery();
+
+            ArrayList<Object[]> rows = new ArrayList<>();
+
+            while (data.next()) {
+                rows.add(new Object[]{
+                        data.getInt("order_id"),
+                        data.getTimestamp("creation_time"),
+                        data.getString("item_name"),
+                        data.getInt("quantity"),
+                        data.getDouble("price_at_the_time")
+                });
+            }
+
+            return rows;
+        } catch (SQLException exception) {
+            throw new DataAccessException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<Object[]> getAllClientsForCombo() throws DataAccessException {
+        try {
+            String sqlString =
+                    "SELECT id, first_name, last_name " +
+                            "FROM client " +
+                            "ORDER BY last_name, first_name";
+
+            PreparedStatement sqlStat =
+                    SingletonConnection.getInstance().prepareStatement(sqlString);
+
+            ResultSet data = sqlStat.executeQuery();
+
+            ArrayList<Object[]> clients = new ArrayList<>();
+
+            while (data.next()) {
+                clients.add(new Object[]{
+                        data.getInt("id"),
+                        data.getString("first_name"),
+                        data.getString("last_name")
+                });
+            }
+
+            return clients;
+        } catch (SQLException exception) {
+            throw new DataAccessException(exception.getMessage());
+        }
+    }
 }

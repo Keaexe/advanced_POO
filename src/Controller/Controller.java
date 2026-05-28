@@ -48,6 +48,11 @@ public class Controller implements IController {
     }
 
     @Override
+    public void displayOrderLinesSearch() {
+        ui.displayOrderLinesSearch();
+    }
+
+    @Override
     public void displayHome() {
         ui.displayHome();
     }
@@ -108,5 +113,17 @@ public class Controller implements IController {
     public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId)
             throws DataAccessException {
         return bL.getItemSearchResultsByReferentId(referentId);
+    }
+
+    @Override
+    public ArrayList<Object[]> getAllClientsForCombo()
+            throws DataAccessException {
+        return bL.getAllClientsForCombo();
+    }
+
+    @Override
+    public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
+            throws DataAccessException {
+        return bL.getOrderLinesByClientId(clientId);
     }
 }

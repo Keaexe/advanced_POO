@@ -15,7 +15,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     private JMenuBar menuBar;
     private JMenu systemMenu, modifications, search;
-    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, backHome;
+    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, orderLinesSearch, backHome;
     private Container mainContainer;
     private JPanel currentPanel;
     private IController controller;
@@ -107,6 +107,15 @@ public class MainWindow extends JFrame implements IUserInterface {
         );
         itemSearch.addActionListener(itemSearchListener);
         search.add(itemSearch);
+
+        orderLinesSearch = new JMenuItem("Order lines");
+        orderLinesSearch.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK)
+        );
+        OrderLinesSearchListener orderLinesSearchListener =
+                new OrderLinesSearchListener(controller);
+        orderLinesSearch.addActionListener(orderLinesSearchListener);
+        search.add(orderLinesSearch);
 
         displayHome();
         setVisible(true);
@@ -250,5 +259,20 @@ public class MainWindow extends JFrame implements IUserInterface {
         }
         mainContainer.revalidate();
         mainContainer.repaint();
+    }
+
+    @Override
+    public void displayOrderLinesSearch() {
+        try {
+            updateContainer(new ReadOrderLinesPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Could not display this panel, could not fetch clients\n" +
+                            e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
