@@ -5,6 +5,8 @@ import Interfaces.*;
 import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BusinessLogic implements IBusinessLogic {
@@ -77,5 +79,20 @@ public class BusinessLogic implements IBusinessLogic {
     public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
             throws DataAccessException {
         return dataAccess.getOrderLinesByClientId(clientId);
+    }
+
+    @Override
+    public ArrayList<String> getAllCountryNames()
+            throws DataAccessException {
+        return dataAccess.getAllCountryNames();
+    }
+
+    @Override
+    public ArrayList<Object[]> getOrdersByCountryAndDates(
+            String countryName,
+            LocalDate startDate,
+            LocalDate endDate
+    ) throws DataAccessException {
+        return dataAccess.getOrdersByCountryAndDates(countryName, startDate, endDate);
     }
 }

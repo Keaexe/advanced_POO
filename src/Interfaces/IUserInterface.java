@@ -11,4 +11,5 @@ public interface IUserInterface {
     void displayReferentSearch();
     void displayHome();
     void displayOrderLinesSearch();
+    void displayOrdersByCountrySearch();
 }

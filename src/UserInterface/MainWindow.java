@@ -15,7 +15,7 @@ public class MainWindow extends JFrame implements IUserInterface {
 
     private JMenuBar menuBar;
     private JMenu systemMenu, modifications, search;
-    private JMenuItem exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, orderLinesSearch, backHome;
+    private JMenuItem ordersByCountrySearch, exit, referentDel, referentUp, referentCr, referentSearch, itemSearch, orderLinesSearch, backHome;
     private Container mainContainer;
     private JPanel currentPanel;
     private IController controller;
@@ -116,6 +116,16 @@ public class MainWindow extends JFrame implements IUserInterface {
                 new OrderLinesSearchListener(controller);
         orderLinesSearch.addActionListener(orderLinesSearchListener);
         search.add(orderLinesSearch);
+
+        ordersByCountrySearch = new JMenuItem("Orders by country");
+        ordersByCountrySearch.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK)
+        );
+
+        OrdersByCountrySearchListener ordersByCountrySearchListener = new OrdersByCountrySearchListener(controller);
+
+        ordersByCountrySearch.addActionListener(ordersByCountrySearchListener);
+        search.add(ordersByCountrySearch);
 
         displayHome();
         setVisible(true);
@@ -269,6 +279,21 @@ public class MainWindow extends JFrame implements IUserInterface {
             JOptionPane.showMessageDialog(
                     this,
                     "Could not display this panel, could not fetch clients\n" +
+                            e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    @Override
+    public void displayOrdersByCountrySearch() {
+        try {
+            updateContainer(new ReadOrdersByCountryPanel(controller));
+        } catch (DataAccessException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Could not display this panel, could not fetch countries\n" +
                             e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE

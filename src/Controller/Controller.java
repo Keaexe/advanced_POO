@@ -4,6 +4,8 @@ import Exceptions.DataAccessException;
 import Interfaces.*;
 import Model.Referent;
 import Model.SchoolOfThought;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Controller implements IController {
@@ -50,6 +52,11 @@ public class Controller implements IController {
     @Override
     public void displayOrderLinesSearch() {
         ui.displayOrderLinesSearch();
+    }
+
+    @Override
+    public void displayOrdersByCountrySearch() {
+        ui.displayOrdersByCountrySearch();
     }
 
     @Override
@@ -125,5 +132,20 @@ public class Controller implements IController {
     public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
             throws DataAccessException {
         return bL.getOrderLinesByClientId(clientId);
+    }
+
+    @Override
+    public ArrayList<String> getAllCountryNames()
+            throws DataAccessException {
+        return bL.getAllCountryNames();
+    }
+
+    @Override
+    public ArrayList<Object[]> getOrdersByCountryAndDates(
+            String countryName,
+            LocalDate startDate,
+            LocalDate endDate
+    ) throws DataAccessException {
+        return bL.getOrdersByCountryAndDates(countryName, startDate, endDate);
     }
 }

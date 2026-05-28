@@ -2,6 +2,8 @@ package Interfaces;
 
 import Exceptions.*;
 import Model.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IDataAccess {
@@ -21,4 +23,11 @@ public interface IDataAccess {
     public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException;
     ArrayList<Object[]> getOrderLinesByClientId(int clientId) throws DataAccessException;
     ArrayList<Object[]> getAllClientsForCombo()throws DataAccessException;
+
+    ArrayList<String> getAllCountryNames() throws DataAccessException;
+    ArrayList<Object[]> getOrdersByCountryAndDates(
+            String countryName,
+            LocalDate startDate,
+            LocalDate endDate
+    ) throws DataAccessException;
 }

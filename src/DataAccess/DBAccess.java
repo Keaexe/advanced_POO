@@ -6,6 +6,7 @@ import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DBAccess implements IDataAccess {
@@ -340,6 +341,88 @@ public class DBAccess implements IDataAccess {
             }
 
             return clients;
+        } catch (SQLException exception) {
+            throw new DataAccessException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<String> getAllCountryNames()
+            throws DataAccessException {
+        try {
+            String sqlString =
+                    "SELECT name " +
+                            "FROM country " +
+                            "ORDER BY name";
+
+            PreparedStatement sqlStat =
+                    SingletonConnection.getInstance().prepareStatement(sqlString);
+
+            ResultSet data = sqlStat.executeQuery();
+
+            ArrayList<String> countries = new ArrayList<>();
+
+            while (data.next()) {
+                countries.add(data.getString("name"));
+            }
+
+            return countries;
+        } catch (SQLException exception) {
+            throw new DataAccessException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<Object[]> getOrdersByCountryAndDates(
+            String countryName,
+            LocalDate startDate,
+            LocalDate endDate
+    ) throws DataAccessException {
+        try {
+            String sqlString =
+                    "SELECT " +
+                            "ot.id AS order_id, " +
+                            "ot.creation_time AS creation_time, " +
+                            "c.first_name AS client_first_name, " +
+                            "c.last_name AS client_last_name, " +
+                            "da.num_in_street AS address_number, " +
+                            "da.street_name AS street, " +
+                            "l.name AS locality_name, " +
+                            "l.zipCode AS zip_code " +
+                            "FROM order_table ot " +
+                            "JOIN client c ON ot.client_id = c.id " +
+                            "JOIN delivery_address da ON c.delivery_address_id = da.id " +
+                            "JOIN locality l ON da.locality_id = l.id " +
+                            "JOIN country co ON l.country_name = co.name " +
+                            "WHERE co.name = ? " +
+                            "AND DATE(ot.creation_time) BETWEEN ? AND ? " +
+                            "ORDER BY ot.creation_time";
+
+            PreparedStatement sqlStat =
+                    SingletonConnection.getInstance().prepareStatement(sqlString);
+
+            sqlStat.setString(1, countryName);
+            sqlStat.setDate(2, java.sql.Date.valueOf(startDate));
+            sqlStat.setDate(3, java.sql.Date.valueOf(endDate));
+
+            ResultSet data = sqlStat.executeQuery();
+
+            ArrayList<Object[]> rows = new ArrayList<>();
+
+            while (data.next()) {
+                rows.add(new Object[]{
+                        data.getInt("order_id"),
+                        data.getTimestamp("creation_time"),
+                        data.getString("client_first_name"),
+                        data.getString("client_last_name"),
+                        data.getString("address_number"),
+                        data.getString("street"),
+                        data.getString("locality_name"),
+                        data.getString("zip_code")
+                });
+            }
+
+            return rows;
         } catch (SQLException exception) {
             throw new DataAccessException(exception.getMessage());
         }
