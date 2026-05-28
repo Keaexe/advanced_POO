@@ -1,4 +1,4 @@
-package Model;
+package Models;
 
 import Exceptions.ValidationException;
 import Utils.ValidationUtils;
@@ -148,7 +148,6 @@ public class Referent {
 
     public void setWebsite(String website) throws ValidationException {
         if (website != null) {
-            System.out.println("Website :" + website);
             int i = 0;
             String https = "https://";
             while (
