@@ -13,6 +13,7 @@ public interface IController {
     public void displayItemSearch();
     public void displayReferentSearch();
     public void displayHome();
+    public void displayOrderLinesSearch();
     public void setUI(IUserInterface ui);
     public void setBusinessLogic(IBusinessLogic bL);
     public ArrayList<SchoolOfThought> getAllSchools()
@@ -26,4 +27,6 @@ public interface IController {
     public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
     public void updateReferent(Referent referent) throws DataAccessException;
     public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException;
+    ArrayList<Object[]> getOrderLinesByClientId(int clientId) throws DataAccessException;
+    ArrayList<Object[]> getAllClientsForCombo()throws DataAccessException;
 }
