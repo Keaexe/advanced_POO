@@ -103,4 +103,10 @@ public class Controller implements IController {
     public void updateReferent(Referent referent) throws DataAccessException {
         bL.updateReferent(referent);
     }
+
+    @Override
+    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId)
+            throws DataAccessException {
+        return bL.getItemSearchResultsByReferentId(referentId);
+    }
 }

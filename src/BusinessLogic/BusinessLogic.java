@@ -2,6 +2,7 @@ package BusinessLogic;
 
 import Exceptions.DataAccessException;
 import Interfaces.*;
+import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
 import java.util.ArrayList;
@@ -59,5 +60,10 @@ public class BusinessLogic implements IBusinessLogic {
     @Override
     public void updateReferent(Referent referent) throws DataAccessException {
         dataAccess.updateReferent(referent);
+    }
+
+    @Override
+    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException{
+        return dataAccess.getItemSearchResultsByReferentId(referentId);
     }
 }

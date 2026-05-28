@@ -175,7 +175,7 @@ public class MainWindow extends JFrame implements IUserInterface {
     @Override
     public void displayItemSearch() {
         try {
-            updateContainer(new ReadRefPanel(controller));
+            updateContainer(new ReadItemPanel(controller));
         } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(
                 this,
