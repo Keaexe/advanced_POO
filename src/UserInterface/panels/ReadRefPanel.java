@@ -5,7 +5,6 @@ import Interfaces.IController;
 import Models.Referent;
 import UserInterface.listeners.CheckBoxListener;
 import UserInterface.listeners.TextListener;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -63,10 +62,10 @@ public class ReadRefPanel extends JPanel {
         byIdBox.addItemListener(checkBoxListener);
 
         textListener = new TextListener(
-                controller,
-                listModel,
-                searchBar,
-                checkBoxListener
+            controller,
+            listModel,
+            searchBar,
+            checkBoxListener
         );
         searchBar.addActionListener(textListener);
 
@@ -118,29 +117,27 @@ public class ReadRefPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 String element = list.getSelectedValue();
-<<<<<<< HEAD:src/UserInterface/ReadRefPanel.java
-                StringBuilder stringB = new StringBuilder();
-=======
 
                 if (element == null) {
                     JOptionPane.showMessageDialog(
-                            null,
-                            "Please select a referent first.",
-                            "No referent selected",
-                            JOptionPane.WARNING_MESSAGE
+                        null,
+                        "Please select a referent first.",
+                        "No referent selected",
+                        JOptionPane.WARNING_MESSAGE
                     );
                     return;
                 }
 
-                String string = "";
->>>>>>> main:src/UserInterface/panels/ReadRefPanel.java
+                StringBuilder stringB = new StringBuilder();
                 int i = 0;
                 while (element.charAt(i) != ')') {
                     stringB.append(element.charAt(i));
                     i++;
                 }
                 if (mode.compareTo("delete") == 0) {
-                    controller.deleteReferent(Integer.parseInt(stringB.toString()));
+                    controller.deleteReferent(
+                        Integer.parseInt(stringB.toString())
+                    );
                     JOptionPane.showMessageDialog(
                         null,
                         "This referent has been deleted",
@@ -150,7 +147,9 @@ public class ReadRefPanel extends JPanel {
                     controller.displayDeleteReferent();
                 } else {
                     controller.displayUpdateReferent(
-                        controller.getReferentById(Integer.parseInt(stringB.toString()))
+                        controller.getReferentById(
+                            Integer.parseInt(stringB.toString())
+                        )
                     );
                 }
             } catch (DataAccessException e) {

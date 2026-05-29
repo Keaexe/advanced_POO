@@ -2,8 +2,8 @@ package DataAccess;
 
 import Exceptions.DataAccessException;
 import Interfaces.IDataAccess;
-import Model.Referent;
-import Model.SchoolOfThought;
+import Models.Referent;
+import Models.SchoolOfThought;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +21,9 @@ public class DBAccess implements IDataAccess {
         ) {
             sqlStat.setInt(1, id);
             ResultSet data = sqlStat.executeQuery();
-            if (!data.next()) throw new DataAccessException("Referent not found (wrong ID)");
+            if (!data.next()) throw new DataAccessException(
+                "Referent not found (wrong ID)"
+            );
             return new Referent(
                 data.getInt("id"),
                 data.getString("designation"),
@@ -38,10 +40,9 @@ public class DBAccess implements IDataAccess {
         }
     }
 
-    public ArrayList<Referent> getReferentsByDesignation(String search) throws DataAccessException {
-        try {
-            String sqlString = "SELECT * FROM referent WHERE designation = ?";
-
+    public ArrayList<Referent> getReferentsByDesignation(String search)
+        throws DataAccessException {
+        try (
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(
                     "SELECT * FROM referent WHERE designation = ?"

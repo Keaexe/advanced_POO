@@ -2,14 +2,7 @@ package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
-<<<<<<< HEAD:src/UserInterface/ReadItemPanel.java
-import Model.Referent;
-=======
 import Models.Referent;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
->>>>>>> main:src/UserInterface/panels/ReadItemsPanel.java
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
