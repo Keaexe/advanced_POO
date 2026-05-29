@@ -13,8 +13,8 @@ public class SchoolOfThought {
 
     public SchoolOfThought(Integer id, String name, String description) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+        setName(name);
+        setDescription(description);
     }
 
     public String getName() {
