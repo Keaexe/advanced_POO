@@ -21,7 +21,7 @@ public class DBAccess implements IDataAccess {
         ) {
             sqlStat.setInt(1, id);
             ResultSet data = sqlStat.executeQuery();
-            data.next();
+            if (!data.next()) throw new DataAccessException("Referent not found (wrong ID)");
             return new Referent(
                 data.getInt("id"),
                 data.getString("designation"),
