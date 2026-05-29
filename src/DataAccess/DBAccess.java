@@ -2,7 +2,6 @@ package DataAccess;
 
 import Exceptions.DataAccessException;
 import Interfaces.IDataAccess;
-import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
 import java.sql.*;
@@ -12,18 +11,6 @@ import java.util.ArrayList;
 public class DBAccess implements IDataAccess {
 
     public DBAccess() throws DataAccessException {}
-
-    public ArrayList<Item> getAllItems() {
-        return null;
-    }
-
-    public Item getItemById(int id) throws DataAccessException {
-        return null;
-    }
-
-    public Integer getItemCount() throws DataAccessException {
-        return 0;
-    }
 
     public Referent getReferentById(int id) throws DataAccessException {
         try {
