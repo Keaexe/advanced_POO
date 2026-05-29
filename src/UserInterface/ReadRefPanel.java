@@ -110,14 +110,14 @@ public class ReadRefPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 String element = list.getSelectedValue();
-                String string = "";
+                StringBuilder stringB = new StringBuilder();
                 int i = 0;
                 while (element.charAt(i) != ')') {
-                    string += element.charAt(i);
+                    stringB.append(element.charAt(i));
                     i++;
                 }
                 if (mode.compareTo("delete") == 0) {
-                    controller.deleteReferent(Integer.parseInt(string));
+                    controller.deleteReferent(Integer.parseInt(stringB.toString()));
                     JOptionPane.showMessageDialog(
                         null,
                         "This referent has been deleted",
@@ -127,7 +127,7 @@ public class ReadRefPanel extends JPanel {
                     controller.displayDeleteReferent();
                 } else {
                     controller.displayUpdateReferent(
-                        controller.getReferentById(Integer.parseInt(string))
+                        controller.getReferentById(Integer.parseInt(stringB.toString()))
                     );
                 }
             } catch (DataAccessException e) {
