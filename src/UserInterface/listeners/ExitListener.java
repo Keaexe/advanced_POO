@@ -1,19 +1,19 @@
-package UserInterface;
+package UserInterface.listeners;
 
-import Interfaces.IController;
+import Interfaces.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ItemSearchListener implements ActionListener {
+public class ExitListener implements ActionListener {
 
     private IController controller;
 
-    public ItemSearchListener(IController controller) {
+    public ExitListener(IController controller) {
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        controller.displayItemSearch();
+        controller.exit();
     }
 }

@@ -1,19 +1,19 @@
-package UserInterface;
+package UserInterface.listeners;
 
 import Interfaces.IController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateListener implements ActionListener {
+public class ItemSearchListener implements ActionListener {
 
     private IController controller;
 
-    public CreateListener(IController controller) {
+    public ItemSearchListener(IController controller) {
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        controller.displayCreateReferent();
+        controller.displayItemSearch();
     }
 }

@@ -1,35 +1,43 @@
 package Interfaces;
 
 import Exceptions.*;
-import Model.*;
+import Models.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IController {
-    public void exit();
-    public void displayCreateReferent();
-    public void displayUpdateReferent();
-    public void displayUpdateReferent(Referent referent);
-    public void displayDeleteReferent();
-    public void displayItemSearch();
-    public void displayReferentSearch();
-    public void displayHome();
-    public void displayOrderLinesSearch();
-    public void setUI(IUserInterface ui);
-    public void setBusinessLogic(IBusinessLogic bL);
-    public ArrayList<SchoolOfThought> getAllSchools()
-        throws DataAccessException;
-    public ArrayList<Referent> getReferentsByDesignation(String search)
-        throws DataAccessException;
-    public Referent getReferentById(int id) throws DataAccessException;
-    public ArrayList<Referent> getAllReferent() throws DataAccessException;
-    public void deleteReferent(int id) throws DataAccessException;
-    public void addReferent(Referent referent) throws DataAccessException;
-    public SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
-    public void updateReferent(Referent referent) throws DataAccessException;
-    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException;
-    ArrayList<Object[]> getOrderLinesByClientId(int clientId) throws DataAccessException;
+    void exit();
+
+    void displayCreateReferent();
+    void displayUpdateReferent();
+    void displayUpdateReferent(Referent referent);
+    void displayDeleteReferent();
+
+    void displayItemSearch();
+    void displayReferentSearch();
+
+    void displayHome();
+
+    void displayOrderLinesSearch();
+    void displayOrdersByCountrySearch();
+
+    void setUI(IUserInterface ui);
+    void setBusinessLogic(IBusinessLogic bL);
+
+    SchoolOfThought getSchoolsByID(int id) throws DataAccessException;
+    ArrayList<SchoolOfThought> getAllSchools() throws DataAccessException;
+
+    ArrayList<Referent> getReferentsByDesignation(String search) throws DataAccessException;
+    Referent getReferentById(int id) throws DataAccessException;
+    ArrayList<Referent> getAllReferent() throws DataAccessException;
+    void deleteReferent(int id) throws DataAccessException;
+    void addReferent(Referent referent) throws DataAccessException;
+
+    void updateReferent(Referent referent) throws DataAccessException;
+
+    ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException;
+
     ArrayList<Object[]> getAllClientsForCombo()throws DataAccessException;
 
     ArrayList<String> getAllCountryNames() throws DataAccessException;
@@ -38,5 +46,6 @@ public interface IController {
             LocalDate startDate,
             LocalDate endDate
     ) throws DataAccessException;
-    void displayOrdersByCountrySearch();
+    ArrayList<Object[]> getOrderLinesByClientId(int clientId) throws DataAccessException;
+
 }
