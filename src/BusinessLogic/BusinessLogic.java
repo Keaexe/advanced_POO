@@ -2,10 +2,8 @@ package BusinessLogic;
 
 import Exceptions.DataAccessException;
 import Interfaces.*;
-import Model.Item;
 import Model.Referent;
 import Model.SchoolOfThought;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -65,34 +63,38 @@ public class BusinessLogic implements IBusinessLogic {
     }
 
     @Override
-    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId) throws DataAccessException{
+    public ArrayList<Object[]> getItemSearchResultsByReferentId(int referentId)
+        throws DataAccessException {
         return dataAccess.getItemSearchResultsByReferentId(referentId);
     }
 
     @Override
     public ArrayList<Object[]> getAllClientsForCombo()
-            throws DataAccessException {
+        throws DataAccessException {
         return dataAccess.getAllClientsForCombo();
     }
 
     @Override
     public ArrayList<Object[]> getOrderLinesByClientId(int clientId)
-            throws DataAccessException {
+        throws DataAccessException {
         return dataAccess.getOrderLinesByClientId(clientId);
     }
 
     @Override
-    public ArrayList<String> getAllCountryNames()
-            throws DataAccessException {
+    public ArrayList<String> getAllCountryNames() throws DataAccessException {
         return dataAccess.getAllCountryNames();
     }
 
     @Override
     public ArrayList<Object[]> getOrdersByCountryAndDates(
-            String countryName,
-            LocalDate startDate,
-            LocalDate endDate
+        String countryName,
+        LocalDate startDate,
+        LocalDate endDate
     ) throws DataAccessException {
-        return dataAccess.getOrdersByCountryAndDates(countryName, startDate, endDate);
+        return dataAccess.getOrdersByCountryAndDates(
+            countryName,
+            startDate,
+            endDate
+        );
     }
 }

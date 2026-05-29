@@ -2,15 +2,13 @@ package UserInterface;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
-import Model.Item;
 import Model.Referent;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class ReadItemPanel extends JPanel {
 
@@ -50,11 +48,11 @@ public class ReadItemPanel extends JPanel {
         wrapper.add(searchPanel, BorderLayout.NORTH);
 
         String[] columnNames = {
-                "Item name",
-                "Price ex VAT",
-                "Quantity",
-                "Price at the time",
-                "Category"
+            "Item name",
+            "Price ex VAT",
+            "Quantity",
+            "Price at the time",
+            "Category",
         };
 
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -68,7 +66,7 @@ public class ReadItemPanel extends JPanel {
     }
 
     private void fillReferentComboBox(IController controller)
-            throws DataAccessException {
+        throws DataAccessException {
         ArrayList<Referent> referents = controller.getAllReferent();
 
         for (Referent referent : referents) {
@@ -96,37 +94,39 @@ public class ReadItemPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 Referent selectedReferent =
-                        (Referent) referentComboBox.getSelectedItem();
+                    (Referent) referentComboBox.getSelectedItem();
 
                 if (selectedReferent == null) {
                     JOptionPane.showMessageDialog(
-                            null,
-                            "Please select a referent.",
-                            "No referent selected",
-                            JOptionPane.WARNING_MESSAGE
+                        null,
+                        "Please select a referent.",
+                        "No referent selected",
+                        JOptionPane.WARNING_MESSAGE
                     );
                     return;
                 }
 
                 ArrayList<Object[]> rows =
-                        controller.getItemSearchResultsByReferentId(selectedReferent.getId());
+                    controller.getItemSearchResultsByReferentId(
+                        selectedReferent.getId()
+                    );
 
                 fillTable(rows);
 
                 if (rows.isEmpty()) {
                     JOptionPane.showMessageDialog(
-                            null,
-                            "No sold item found for this referent.",
-                            "No result",
-                            JOptionPane.INFORMATION_MESSAGE
+                        null,
+                        "No sold item found for this referent.",
+                        "No result",
+                        JOptionPane.INFORMATION_MESSAGE
                     );
                 }
             } catch (DataAccessException exception) {
                 JOptionPane.showMessageDialog(
-                        null,
-                        "Could not search items.\n" + exception.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Could not search items.\n" + exception.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
                 );
             }
         }
