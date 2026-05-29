@@ -2,8 +2,8 @@ package Controller;
 
 import Exceptions.DataAccessException;
 import Interfaces.*;
-import Model.Referent;
-import Model.SchoolOfThought;
+import Models.Referent;
+import Models.SchoolOfThought;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

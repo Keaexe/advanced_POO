@@ -1,4 +1,4 @@
-package UserInterface;
+package UserInterface.listeners;
 
 import Interfaces.IController;
 import java.awt.event.ActionEvent;

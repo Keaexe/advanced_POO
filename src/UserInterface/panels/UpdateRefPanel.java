@@ -1,8 +1,8 @@
-package UserInterface;
+package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
-import Model.Referent;
+import Models.Referent;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 

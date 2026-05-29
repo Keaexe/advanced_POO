@@ -1,8 +1,15 @@
-package UserInterface;
+package UserInterface.panels;
 
 import Exceptions.DataAccessException;
 import Interfaces.IController;
+<<<<<<< HEAD:src/UserInterface/ReadItemPanel.java
 import Model.Referent;
+=======
+import Models.Referent;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+>>>>>>> main:src/UserInterface/panels/ReadItemsPanel.java
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +17,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ReadItemPanel extends JPanel {
+public class ReadItemsPanel extends JPanel {
 
     private JLabel title;
     private JLabel referentLabel;
@@ -22,10 +29,10 @@ public class ReadItemPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
 
-    public ReadItemPanel(IController controller) throws DataAccessException {
+    public ReadItemsPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
 
-        title = new JLabel("Search items by referent");
+        title = new JLabel("Search sold items by referent");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.ITALIC, 28));
         this.add(title, BorderLayout.NORTH);

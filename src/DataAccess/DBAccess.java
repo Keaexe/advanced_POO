@@ -38,9 +38,10 @@ public class DBAccess implements IDataAccess {
         }
     }
 
-    public ArrayList<Referent> getReferentsByDesignation(String search)
-        throws DataAccessException {
-        try (
+    public ArrayList<Referent> getReferentsByDesignation(String search) throws DataAccessException {
+        try {
+            String sqlString = "SELECT * FROM referent WHERE designation = ?";
+
             PreparedStatement sqlStat =
                 SingletonConnection.getInstance().prepareStatement(
                     "SELECT * FROM referent WHERE designation = ?"
@@ -48,6 +49,7 @@ public class DBAccess implements IDataAccess {
         ) {
             sqlStat.setString(1, search);
             ResultSet data = sqlStat.executeQuery();
+
             var referents = new ArrayList<Referent>();
             while (data.next()) {
                 referents.add(
@@ -64,6 +66,7 @@ public class DBAccess implements IDataAccess {
                     )
                 );
             }
+
             return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -78,6 +81,7 @@ public class DBAccess implements IDataAccess {
                 )
         ) {
             ResultSet data = sqlStat.executeQuery();
+
             var referents = new ArrayList<Referent>();
             while (data.next()) {
                 referents.add(
@@ -94,6 +98,7 @@ public class DBAccess implements IDataAccess {
                     )
                 );
             }
+
             return referents;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -188,6 +193,7 @@ public class DBAccess implements IDataAccess {
                 )
         ) {
             ResultSet data = sqlStat.executeQuery();
+
             var schools = new ArrayList<SchoolOfThought>();
             while (data.next()) {
                 schools.add(
@@ -198,6 +204,7 @@ public class DBAccess implements IDataAccess {
                     )
                 );
             }
+
             return schools;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());

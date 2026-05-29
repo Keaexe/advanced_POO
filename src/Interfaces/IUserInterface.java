@@ -1,15 +1,18 @@
 package Interfaces;
 
-import Model.Referent;
+import Models.Referent;
 
 public interface IUserInterface {
     void displayCreateReferent();
     void displayUpdateReferent();
     void displayUpdateReferent(Referent referent);
     void displayDeleteReferent();
-    void displayItemSearch();
     void displayReferentSearch();
-    void displayHome();
+
+    void displayItemSearch();
+
     void displayOrderLinesSearch();
     void displayOrdersByCountrySearch();
+
+    void displayHome();
 }

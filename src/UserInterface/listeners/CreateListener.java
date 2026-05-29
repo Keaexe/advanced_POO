@@ -1,19 +1,19 @@
-package UserInterface;
+package UserInterface.listeners;
 
-import Interfaces.*;
+import Interfaces.IController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ExitListener implements ActionListener {
+public class CreateListener implements ActionListener {
 
     private IController controller;
 
-    public ExitListener(IController controller) {
+    public CreateListener(IController controller) {
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        controller.exit();
+        controller.displayCreateReferent();
     }
 }

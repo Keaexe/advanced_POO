@@ -1,19 +1,19 @@
-package UserInterface;
+package UserInterface.listeners;
 
 import Interfaces.IController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomeListener implements ActionListener {
+public class ReferentSearchListener implements ActionListener {
 
     private IController controller;
 
-    public HomeListener(IController controller) {
+    public ReferentSearchListener(IController controller) {
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        controller.displayHome();
+        controller.displayReferentSearch();
     }
 }
