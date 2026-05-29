@@ -39,7 +39,7 @@ public class ReadRefPanel extends JPanel {
         this.mode = mode;
 
         this.setLayout(new BorderLayout());
-        title = new JLabel("Here is the place to " + mode + "referents");
+        title = new JLabel("Here is the place to " + mode + " referents");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.ITALIC, 28));
         this.add(title, BorderLayout.NORTH);

@@ -24,13 +24,13 @@ public final class ValidationUtils {
             return null;
         }
 
-        String cleanedValue = value.strip();
+        value = value.strip(); // cleaning value
 
-        if (maxLength != null && cleanedValue.length() > maxLength) {
+        if (maxLength != null && value.length() > maxLength) {
             throw new ValidationException(fieldName + " maximum number of characters = " + maxLength + " characters.");
         }
 
-        return cleanedValue;
+        return value;
     }
 
     public static String validateString(String value, String fieldName, boolean isRequired) throws ValidationException{
