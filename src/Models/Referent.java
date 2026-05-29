@@ -89,7 +89,9 @@ public class Referent {
             designation,
             "designation",
             true,
-            100
+            100,
+                ValidationUtils.ALPHANUMERIC_REGEX,
+                ValidationUtils.ALPHANUMERIC_ERROR_MESSAGE
         );
     }
 
@@ -102,7 +104,9 @@ public class Referent {
             firstName,
             "firstName",
             true,
-            50
+            50,
+                ValidationUtils.ALPHANUMERIC_REGEX,
+                ValidationUtils.ALPHANUMERIC_ERROR_MESSAGE
         );
     }
 
@@ -115,7 +119,9 @@ public class Referent {
             lastName,
             "lastName",
             true,
-            100
+            100,
+                ValidationUtils.ALPHANUMERIC_REGEX,
+                ValidationUtils.ALPHANUMERIC_ERROR_MESSAGE
         );
     }
 
@@ -147,30 +153,15 @@ public class Referent {
     }
 
     public void setWebsite(String website) throws ValidationException {
-        String cleanedWebsite = ValidationUtils.validateString(
+
+        this.website = ValidationUtils.validateString(
                 website,
                 "website",
                 false,
-                255
+                255,
+                ValidationUtils.URL_REGEX,
+                ValidationUtils.URL_ERROR_MESSAGE
         );
-
-        if (cleanedWebsite != null) {
-            int i = 0;
-            String https = "https://";
-            while (
-                i < cleanedWebsite.length() &&
-                i < https.length() &&
-                cleanedWebsite.charAt(i) == https.charAt(i)
-            ) {
-                i++;
-            }
-            if (i != https.length()) {
-                throw new ValidationException(
-                    "A website must begin by https://"
-                );
-            }
-        }
-        this.website = cleanedWebsite;
     }
 
     public String getNickname() {
@@ -182,7 +173,9 @@ public class Referent {
             nickname,
             "nickname",
             false,
-            255
+            255,
+                ValidationUtils.ALPHANUMERIC_REGEX,
+                ValidationUtils.ALPHANUMERIC_ERROR_MESSAGE
         );
     }
 }

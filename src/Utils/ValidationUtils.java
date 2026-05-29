@@ -6,6 +6,21 @@ import java.time.LocalDate;
 
 public final class ValidationUtils {
     static public final Integer MIN_AGE_REQUIRED = 18;
+    /**
+     * Matches a non-empty string containing only Unicode letters,
+     * Unicode digits, single quotes and spaces.
+     * Get a try : <a href="https://www.freeformatter.com/java-regex-tester.html">...</a>
+     */
+    public static final String ALPHANUMERIC_REGEX = "^[\\p{L}\\p{N} '\\-]+$";
+    public static final String ALPHANUMERIC_ERROR_MESSAGE = "No special character allowed.";
+
+    /**
+     * Matches an HTTPS URL with a domain name and an extension.
+     * Allows an optional path after the extension.
+     * Get a try : <a href="https://www.freeformatter.com/java-regex-tester.html">...</a>
+     */
+    public static final String URL_REGEX = "^https://[\\p{L}\\p{N}.-]+\\.[\\p{L}]{2,}.*$";
+    public static final String URL_ERROR_MESSAGE = "Website URL must start with 'https://' then contain a domain name such as '.com'";
 
     public static String validateString(
             String value,
@@ -34,7 +49,7 @@ public final class ValidationUtils {
 
         if (regex != null && !cleanedValue.matches(regex)) {
             if (regexErrorMessage != null && !regexErrorMessage.isBlank()) {
-                throw new ValidationException(regexErrorMessage);
+                throw new ValidationException(fieldName + " - " + regexErrorMessage);
             }
 
             throw new ValidationException(fieldName + " has an invalid format.");
