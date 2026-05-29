@@ -147,13 +147,20 @@ public class Referent {
     }
 
     public void setWebsite(String website) throws ValidationException {
-        if (website != null) {
+        String cleanedWebsite = ValidationUtils.validateString(
+                website,
+                "website",
+                false,
+                255
+        );
+
+        if (cleanedWebsite != null) {
             int i = 0;
             String https = "https://";
             while (
-                i < website.length() &&
+                i < cleanedWebsite.length() &&
                 i < https.length() &&
-                website.charAt(i) == https.charAt(i)
+                cleanedWebsite.charAt(i) == https.charAt(i)
             ) {
                 i++;
             }
@@ -163,12 +170,7 @@ public class Referent {
                 );
             }
         }
-        this.website = ValidationUtils.validateString(
-            website,
-            "website",
-            false,
-            255
-        );
+        this.website = cleanedWebsite;
     }
 
     public String getNickname() {
