@@ -26,7 +26,7 @@ public class ReadItemsPanel extends JPanel {
     public ReadItemsPanel(IController controller) throws DataAccessException {
         this.setLayout(new BorderLayout());
 
-        title = new JLabel("Search items by referent");
+        title = new JLabel("Search sold items by referent");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.ITALIC, 28));
         this.add(title, BorderLayout.NORTH);
