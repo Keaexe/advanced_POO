@@ -1,8 +1,10 @@
 IF DB_ID('exam_db') IS NULL
+BEGIN
     EXEC('CREATE DATABASE exam_db');
-
+END
+GO
 USE exam_db;
-
+GO
 CREATE TABLE category
 (
     name VARCHAR(100) PRIMARY KEY CHECK (TRIM(name) <> ''),
@@ -48,7 +50,7 @@ CREATE TABLE locality
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     name VARCHAR(255) NOT NULL CHECK (TRIM(name) <> ''),
-    zipCode VARCHAR(20) NOT NULL CHECK (TRIM(zipCode) <> ''),
+    zip_code VARCHAR(20) NOT NULL CHECK (TRIM(zip_code) <> ''),
     is_supported BIT NOT NULL,
     country_name VARCHAR(50) NOT NULL CHECK (TRIM(country_name) <> ''),
 
