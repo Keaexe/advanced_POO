@@ -23,7 +23,7 @@ VALUES ('Belgium', 1),
        ('Luxembourg', 1),
        ('Atlantis', 0);
 
-INSERT INTO locality (name, zipCode, is_supported, country_name)
+INSERT INTO locality (name, zip_code, is_supported, country_name)
 VALUES ('Anhée', '5537', 1, 'Belgium'),
        ('Namur', '5000', 1, 'Belgium'),
        ('Dinant', '5500', 1, 'Belgium'),
