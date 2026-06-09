@@ -385,7 +385,7 @@ public class DBAccess implements IDataAccess {
         sqlStringB.append("da.num_in_street AS address_number, ");
         sqlStringB.append("da.street_name AS street, ");
         sqlStringB.append("l.name AS locality_name, ");
-        sqlStringB.append("l.zipCode AS zip_code ");
+        sqlStringB.append("l.zip_code AS zip_code ");
         sqlStringB.append("FROM order_table ot ");
         sqlStringB.append("JOIN client c ON ot.client_id = c.id ");
         sqlStringB.append(

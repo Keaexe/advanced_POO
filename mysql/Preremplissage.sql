@@ -28,7 +28,7 @@ INSERT INTO country (name, is_supported) VALUES
     ('Atlantis', FALSE);
 
 -- locality
-INSERT INTO locality (name, zipCode, is_supported, country_name) VALUES
+INSERT INTO locality (name, zip_code, is_supported, country_name) VALUES
     ('Anhée', '5537', TRUE, 'Belgium'),
     ('Namur', '5000', TRUE, 'Belgium'),
     ('Dinant', '5500', TRUE, 'Belgium'),

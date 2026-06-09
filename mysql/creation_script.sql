@@ -39,7 +39,7 @@ CREATE TABLE item (
 CREATE TABLE locality (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL CHECK (TRIM(name) <> ''),
-    zipCode VARCHAR(20) NOT NULL  CHECK (TRIM(zipCode) <> ''),
+    zip_code VARCHAR(20) NOT NULL  CHECK (TRIM(zip_code) <> ''),
     is_supported BOOLEAN NOT NULL,
     country_name VARCHAR(50) NOT NULL CHECK (TRIM(country_name) <> ''),
     FOREIGN KEY (country_name) REFERENCES country(name)
