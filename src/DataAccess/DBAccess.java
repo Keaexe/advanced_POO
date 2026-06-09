@@ -394,7 +394,7 @@ public class DBAccess implements IDataAccess {
         sqlStringB.append("JOIN locality l ON da.locality_id = l.id ");
         sqlStringB.append("JOIN country co ON l.country_name = co.name ");
         sqlStringB.append("WHERE co.name = ? ");
-        sqlStringB.append("AND DATE(ot.creation_time) BETWEEN ? AND ? ");
+        sqlStringB.append("AND CAST(ot.creation_time AS DATE) BETWEEN ? AND ? ");
         sqlStringB.append("ORDER BY ot.creation_time");
         try (
             PreparedStatement sqlStat =
